@@ -1,0 +1,91 @@
+name: ZSE Monitor and Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      check_type:
+        description: "Run mode"
+        required: true
+        default: "auto"
+        type: choice
+        options:
+          - auto
+          - morning
+          - tactical
+          - summary
+  schedule:
+    - cron: "*/5 7-16 * * 1-5"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: zse-monitor-pages
+  cancel-in-progress: false
+
+jobs:
+  monitor-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install backend dependencies
+        run: pip install -r backend/requirements.txt
+
+      - name: Run ZSE monitor
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          WOW_TURNOVER_THRESHOLD_EUR: ${{ vars.WOW_TURNOVER_THRESHOLD_EUR || '40000' }}
+          WOW_PRICE_CHANGE_THRESHOLD_PCT: ${{ vars.WOW_PRICE_CHANGE_THRESHOLD_PCT || '4' }}
+          REQUEST_TIMEOUT_SECONDS: ${{ vars.REQUEST_TIMEOUT_SECONDS || '20' }}
+        run: python backend/run_monitor.py --force "${{ inputs.check_type || 'auto' }}"
+
+      - name: Commit generated portfolio data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update ZSE portfolio data"
+          file_pattern: frontend/public/data/portfolio.json
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Build dashboard
+        working-directory: frontend
+        run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/dist
+
+  deploy:
+    needs: monitor-and-build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

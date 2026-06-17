@@ -1,0 +1,14 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "TELEGRAM_TOKEN": "",
+    "TELEGRAM_CHAT_ID": "",
+    "OPENAI_API_KEY": "",
+    "WOW_TURNOVER_THRESHOLD_EUR": "40000",
+    "WOW_PRICE_CHANGE_THRESHOLD_PCT": "4",
+    "REQUEST_TIMEOUT_SECONDS": "20",
+    "WEBSITE_TIME_ZONE": "Central European Standard Time"
+  }
+}
