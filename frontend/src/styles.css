@@ -31,6 +31,20 @@ button {
   margin-bottom: 22px;
 }
 
+.topbarActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.lastCheck {
+  margin: 8px 0 0;
+  color: #69727f;
+  font-size: 13px;
+}
+
 .eyebrow {
   margin: 0 0 4px;
   color: #69727f;
@@ -69,11 +83,16 @@ h2 {
   color: #18202a;
   background: #ffffff;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .iconButton:disabled {
   cursor: wait;
   opacity: 0.72;
+}
+
+.linkButton {
+  color: #18202a;
 }
 
 .notice,
@@ -213,6 +232,21 @@ tbody tr.buyRow td:first-child {
 
 tbody tr.sellRow td:first-child {
   border-left: 4px solid #d64032;
+}
+
+.clickableRow {
+  cursor: pointer;
+}
+
+.clickableRow:hover {
+  background: #eef6ff;
+}
+
+.dividendCheck {
+  width: 18px;
+  height: 18px;
+  accent-color: #117a55;
+  pointer-events: none;
 }
 
 .tickerCell {
@@ -377,6 +411,77 @@ tbody tr.sellRow td:first-child {
   color: #334051;
 }
 
+.forecastPanel {
+  width: min(640px, 100%);
+}
+
+.forecastBody {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+}
+
+.forecastHero {
+  display: grid;
+  gap: 4px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #eef2f6;
+  color: #425066;
+}
+
+.forecastHero.success {
+  background: #e3f5ee;
+  color: #116247;
+}
+
+.forecastHero.danger {
+  background: #fde7e4;
+  color: #a3231b;
+}
+
+.forecastHero strong {
+  font-size: 28px;
+}
+
+.forecastHero span,
+.forecastHero small {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.forecastMetrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.forecastMetrics span {
+  padding: 10px;
+  border: 1px solid #d7dee7;
+  border-radius: 8px;
+  background: #fafbfc;
+  color: #526070;
+}
+
+.compactGroup {
+  padding: 0;
+  border-bottom: 0;
+}
+
+.driverList {
+  margin: 0;
+  padding-left: 18px;
+  color: #334051;
+}
+
+.forecastDisclaimer {
+  margin: 0;
+  color: #69727f;
+  font-size: 12px;
+}
+
 @media (max-width: 720px) {
   .dashboard {
     padding: 16px;
@@ -392,6 +497,10 @@ tbody tr.sellRow td:first-child {
   }
 
   .iconButton {
+    width: 100%;
+  }
+
+  .topbarActions {
     width: 100%;
   }
 }

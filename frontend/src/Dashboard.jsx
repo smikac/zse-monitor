@@ -2,12 +2,16 @@ import { useEffect, useMemo, useState } from "react";
 import { AlertTriangle, RefreshCw, TrendingDown, TrendingUp } from "lucide-react";
 import { fetchPortfolio } from "./api.js";
 
+const WORKFLOW_URL = "https://github.com/smikac/zse-monitor/actions/workflows/zse-monitor-pages.yml";
+
 export default function Dashboard() {
+  const [meta, setMeta] = useState({});
   const [positions, setPositions] = useState([]);
   const [opportunities, setOpportunities] = useState([]);
   const [forumSignals, setForumSignals] = useState([]);
   const [expertSignals, setExpertSignals] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [forecastItem, setForecastItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -16,6 +20,7 @@ export default function Dashboard() {
     setError("");
     try {
       const data = await fetchPortfolio();
+      setMeta(data.meta ?? {});
       setPositions(data.positions);
       setOpportunities(data.opportunities);
       setForumSignals(data.forumSignals);
@@ -41,17 +46,31 @@ export default function Dashboard() {
     setModalOpen(true);
   }
 
+  async function refreshView() {
+    await loadPortfolio();
+  }
+
   return (
     <main className="dashboard">
       <header className="topbar">
         <div>
           <p className="eyebrow">Zagrebačka burza</p>
           <h1>Portfelj i signali</h1>
+          <p className="lastCheck">Zadnja provjera: <strong>{formatDateTime(meta.generated_at)}</strong></p>
         </div>
-        <button className="iconButton" onClick={checkNow} disabled={loading} aria-label="Provjeri stanje">
-          <RefreshCw size={18} />
-          <span>{loading ? "Provjeravam" : "Provjeri stanje"}</span>
-        </button>
+        <div className="topbarActions">
+          <button className="iconButton" onClick={refreshView} disabled={loading} aria-label="Osvježi prikaz">
+            <RefreshCw size={18} />
+            <span>{loading ? "Osvježavam" : "Osvježi prikaz"}</span>
+          </button>
+          <button className="iconButton" onClick={checkNow} disabled={loading} aria-label="Provjeri stanje">
+            <AlertTriangle size={18} />
+            <span>Provjeri stanje</span>
+          </button>
+          <a className="iconButton linkButton" href={WORKFLOW_URL} target="_blank" rel="noreferrer">
+            Pokreni novu provjeru
+          </a>
+        </div>
       </header>
 
       {error && <div className="notice">{error}</div>}
@@ -77,7 +96,7 @@ export default function Dashboard() {
           <h2>Pregled portfelja</h2>
           <span>{positions.length} pozicije</span>
         </div>
-        <PortfolioTable positions={positions} loading={loading} />
+        <PortfolioTable positions={positions} loading={loading} onSelect={setForecastItem} />
       </section>
 
       <section className="tableShell secondaryShell">
@@ -85,8 +104,10 @@ export default function Dashboard() {
           <h2>Dnevni ZSE kandidati</h2>
           <span>{opportunities.length} signali</span>
         </div>
-        <OpportunityTable opportunities={opportunities} loading={loading} />
+        <OpportunityTable opportunities={opportunities} loading={loading} onSelect={setForecastItem} />
       </section>
+
+      {forecastItem && <ForecastModal item={forecastItem} onClose={() => setForecastItem(null)} />}
 
       {modalOpen && (
         <StatusModal
@@ -120,7 +141,7 @@ function AlertCard({ item }) {
   );
 }
 
-function PortfolioTable({ positions, loading }) {
+function PortfolioTable({ positions, loading, onSelect }) {
   if (loading && positions.length === 0) {
     return <div className="tableState">Učitavanje tržišnih podataka...</div>;
   }
@@ -136,6 +157,7 @@ function PortfolioTable({ positions, loading }) {
           <tr>
             <th>Ticker</th>
             <th>Cijena</th>
+            <th>Dividenda</th>
             <th>Tehnika</th>
             <th>AI sažetak</th>
             <th>Zadnja provjera</th>
@@ -144,7 +166,7 @@ function PortfolioTable({ positions, loading }) {
         </thead>
         <tbody>
           {positions.map((item) => (
-            <tr key={item.ticker} className={rowSignalClass(item.recommendation?.action)}>
+            <tr key={item.ticker} className={`${rowSignalClass(item.recommendation?.action)} clickableRow`} onClick={() => onSelect(item)}>
               <td>
                 <div className="tickerCell">
                   <strong>{item.ticker}</strong>
@@ -158,6 +180,7 @@ function PortfolioTable({ positions, loading }) {
                   {formatPercent(item.quote?.change_pct)}
                 </span>
               </td>
+              <td><DividendCheckbox checked={item.has_dividend} /></td>
               <td>
                 <Badge tone={technicalTone(item.technical?.trend)}>{item.technical?.status ?? "N/A"}</Badge>
               </td>
@@ -175,7 +198,7 @@ function PortfolioTable({ positions, loading }) {
   );
 }
 
-function OpportunityTable({ opportunities, loading }) {
+function OpportunityTable({ opportunities, loading, onSelect }) {
   if (loading && opportunities.length === 0) {
     return <div className="tableState">Učitavanje ZSE kandidata...</div>;
   }
@@ -191,6 +214,7 @@ function OpportunityTable({ opportunities, loading }) {
           <tr>
             <th>Ticker</th>
             <th>Cijena</th>
+            <th>Dividenda</th>
             <th>Promet</th>
             <th>Tehnika</th>
             <th>Signal</th>
@@ -199,7 +223,7 @@ function OpportunityTable({ opportunities, loading }) {
         </thead>
         <tbody>
           {opportunities.map((item) => (
-            <tr key={item.ticker} className={opportunityRowClass(item.action)}>
+            <tr key={item.ticker} className={`${opportunityRowClass(item.action)} clickableRow`} onClick={() => onSelect(item)}>
               <td><strong>{item.ticker}</strong></td>
               <td>
                 <strong>{formatCurrency(item.quote?.last_price)}</strong>
@@ -208,6 +232,7 @@ function OpportunityTable({ opportunities, loading }) {
                   {formatPercent(item.quote?.change_pct)}
                 </span>
               </td>
+              <td><DividendCheckbox checked={item.has_dividend} /></td>
               <td>{formatCurrency(item.quote?.turnover_eur)}</td>
               <td><Badge tone={technicalTone(item.technical?.trend)}>{item.technical?.status ?? "N/A"}</Badge></td>
               <td><Badge tone={opportunityTone(item.action)}>{item.action}</Badge></td>
@@ -216,6 +241,46 @@ function OpportunityTable({ opportunities, loading }) {
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+function DividendCheckbox({ checked }) {
+  return <input className="dividendCheck" type="checkbox" checked={Boolean(checked)} readOnly aria-label="Ima dividendu" />;
+}
+
+function ForecastModal({ item, onClose }) {
+  const forecast = item.annual_forecast;
+  return (
+    <div className="modalBackdrop" role="presentation" onClick={onClose}>
+      <section className="modalPanel forecastPanel" role="dialog" aria-modal="true" aria-label="Jednogodišnja prognoza" onClick={(event) => event.stopPropagation()}>
+        <div className="modalHeader">
+          <h2>{item.ticker} prognoza</h2>
+          <button className="closeButton" onClick={onClose} aria-label="Zatvori">x</button>
+        </div>
+        <div className="forecastBody">
+          <div className={`forecastHero ${forecastTone(forecast?.direction)}`}>
+            <span>12 mjeseci</span>
+            <strong>{forecast?.direction ?? "NEUTRALNO"}</strong>
+            <small>Pouzdanost {Math.round((forecast?.confidence ?? 0) * 100)}%</small>
+          </div>
+          <p>{forecast?.summary ?? "Nema dovoljno podataka za prognozu."}</p>
+          <div className="forecastMetrics">
+            <span>Cijena: <strong>{formatCurrency(item.quote?.last_price)}</strong></span>
+            <span>Promjena: <strong>{formatPercent(item.quote?.change_pct)}</strong></span>
+            <span>Dividenda: <strong>{item.has_dividend ? "da" : "ne"}</strong></span>
+          </div>
+          {forecast?.drivers?.length > 0 && (
+            <div className="signalGroup compactGroup">
+              <h3>Zašto</h3>
+              <ul className="driverList">
+                {forecast.drivers.map((driver) => <li key={driver}>{driver}</li>)}
+              </ul>
+            </div>
+          )}
+          <p className="forecastDisclaimer">Ovo je heuristička procjena iz dostupnih tržišnih signala, ne financijski savjet.</p>
+        </div>
+      </section>
     </div>
   );
 }
@@ -341,6 +406,12 @@ function opportunityRowClass(action = "") {
   if (action === "KUPI") return "buyRow";
   if (action === "IZBJEGNI") return "sellRow";
   return "";
+}
+
+function forecastTone(direction = "") {
+  if (direction === "RAST") return "success";
+  if (direction === "PAD") return "danger";
+  return "neutral";
 }
 
 function technicalTone(trend = "") {
