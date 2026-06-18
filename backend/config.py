@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import json
 import os
 from dataclasses import dataclass
-from typing import Final, Literal, TypedDict
+from typing import Literal, TypedDict
 
 
 InvestmentHorizon = Literal["short_term", "long_term"]
@@ -27,31 +28,15 @@ class AppSettings:
     request_timeout_seconds: int = 20
 
 
-PORTFOLIO: Final[list[PortfolioPosition]] = [
+EXAMPLE_PORTFOLIO: list[PortfolioPosition] = [
     {
         "ticker": "KODT",
-        "kolicina": 10,
-        "prosjecna_kupovna_cijena": 1550.0,
-        "target_price": 1900.0,
-        "stop_loss": 1350.0,
+        "kolicina": 1,
+        "prosjecna_kupovna_cijena": 1000.0,
+        "target_price": 1200.0,
+        "stop_loss": 900.0,
         "investment_horizon": "long_term",
-    },
-    {
-        "ticker": "SPAN",
-        "kolicina": 35,
-        "prosjecna_kupovna_cijena": 48.0,
-        "target_price": 62.0,
-        "stop_loss": 41.0,
-        "investment_horizon": "short_term",
-    },
-    {
-        "ticker": "HT",
-        "kolicina": 120,
-        "prosjecna_kupovna_cijena": 27.5,
-        "target_price": 34.0,
-        "stop_loss": 23.5,
-        "investment_horizon": "long_term",
-    },
+    }
 ]
 
 
@@ -64,3 +49,35 @@ def get_settings() -> AppSettings:
         wow_price_change_threshold_pct=float(os.getenv("WOW_PRICE_CHANGE_THRESHOLD_PCT", "4")),
         request_timeout_seconds=int(os.getenv("REQUEST_TIMEOUT_SECONDS", "20")),
     )
+
+
+def get_portfolio() -> list[PortfolioPosition]:
+    raw_portfolio = os.getenv("PORTFOLIO_JSON", "").strip()
+    if not raw_portfolio:
+        return EXAMPLE_PORTFOLIO
+
+    parsed = json.loads(raw_portfolio)
+    if not isinstance(parsed, list):
+        raise ValueError("PORTFOLIO_JSON must be a JSON array.")
+
+    portfolio: list[PortfolioPosition] = []
+    for item in parsed:
+        if not isinstance(item, dict):
+            raise ValueError("Each PORTFOLIO_JSON item must be an object.")
+        portfolio.append(_validate_position(item))
+    return portfolio
+
+
+def _validate_position(item: dict) -> PortfolioPosition:
+    horizon = item.get("investment_horizon")
+    if horizon not in {"short_term", "long_term"}:
+        raise ValueError("investment_horizon must be 'short_term' or 'long_term'.")
+
+    return {
+        "ticker": str(item["ticker"]).upper().strip(),
+        "kolicina": int(item["kolicina"]),
+        "prosjecna_kupovna_cijena": float(item["prosjecna_kupovna_cijena"]),
+        "target_price": float(item["target_price"]),
+        "stop_loss": float(item["stop_loss"]),
+        "investment_horizon": horizon,
+    }

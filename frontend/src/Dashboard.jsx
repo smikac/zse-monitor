@@ -110,7 +110,7 @@ function PortfolioTable({ positions, loading }) {
               <td>
                 <div className="tickerCell">
                   <strong>{item.ticker}</strong>
-                  <span>{item.quantity} kom · {item.investment_horizon === "long_term" ? "dugo" : "kratko"}</span>
+                  <span>{formatPositionMeta(item)}</span>
                 </div>
               </td>
               <td>
@@ -174,4 +174,12 @@ function formatDateTime(value) {
     hour: "2-digit",
     minute: "2-digit",
   }).format(new Date(value));
+}
+
+function formatPositionMeta(item) {
+  const horizon = item.investment_horizon === "long_term" ? "dugo" : "kratko";
+  if (item.quantity === null || item.quantity === undefined) {
+    return `privatno · ${horizon}`;
+  }
+  return `${item.quantity} kom · ${horizon}`;
 }

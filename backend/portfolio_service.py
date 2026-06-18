@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 
 from analyzer import analyze_forum_sentiment, build_recommendation, calculate_technical_analysis
-from config import PORTFOLIO, get_settings
+from config import get_portfolio, get_settings
 from models import MarketQuote, PortfolioAnalysis
 from scrapers import scrape_dionice_forum, scrape_mojedionice
 
@@ -12,7 +12,7 @@ def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
     quotes = scrape_mojedionice()
     analyses: list[PortfolioAnalysis] = []
 
-    for position in PORTFOLIO:
+    for position in get_portfolio():
         ticker = position["ticker"]
         quote = quotes.get(ticker)
         forum_comments = scrape_dionice_forum(ticker)

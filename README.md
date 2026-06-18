@@ -11,6 +11,7 @@ Use GitHub Actions for scheduled monitoring and GitHub Pages for the dashboard.
    - `TELEGRAM_TOKEN`
    - `TELEGRAM_CHAT_ID`
    - `OPENAI_API_KEY`
+   - `PORTFOLIO_JSON`
 3. Go to `Settings > Pages` and set source to `GitHub Actions`.
 4. Run the `ZSE Monitor and Pages` workflow manually once from the `Actions` tab.
 
@@ -21,6 +22,22 @@ The workflow runs every 5 minutes during the relevant weekday UTC window, but `b
 - 17:00 Europe/Zagreb daily summary
 
 The generated dashboard data is written to `frontend/public/data/portfolio.json` and published with the React app.
+The published dashboard payload is sanitized: quantities, average buy prices, and P&L are removed before publishing.
+
+Example `PORTFOLIO_JSON` secret:
+
+```json
+[
+  {
+    "ticker": "KODT",
+    "kolicina": 10,
+    "prosjecna_kupovna_cijena": 1550.0,
+    "target_price": 1900.0,
+    "stop_loss": 1350.0,
+    "investment_horizon": "long_term"
+  }
+]
+```
 
 ## Backend
 

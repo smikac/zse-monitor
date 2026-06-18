@@ -101,11 +101,25 @@ def _write_dashboard_payload(previous_payload: dict, check_type: str, analyses: 
             "check_type": check_type,
             "last_runs": last_runs,
         },
-        "positions": to_jsonable(analyses),
+        "positions": _sanitize_public_positions(to_jsonable(analyses)),
     }
 
     PORTFOLIO_JSON.parent.mkdir(parents=True, exist_ok=True)
     PORTFOLIO_JSON.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _sanitize_public_positions(positions: list[dict]) -> list[dict]:
+    sanitized_positions: list[dict] = []
+    for item in positions:
+        sanitized = dict(item)
+        sanitized["quantity"] = None
+        sanitized["average_buy_price"] = None
+        sanitized["target_price"] = None
+        sanitized["stop_loss"] = None
+        sanitized["pnl_eur"] = None
+        sanitized["pnl_pct"] = None
+        sanitized_positions.append(sanitized)
+    return sanitized_positions
 
 
 if __name__ == "__main__":
