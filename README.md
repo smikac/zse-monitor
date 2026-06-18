@@ -14,6 +14,7 @@ Use GitHub Actions for scheduled monitoring and GitHub Pages for the dashboard.
    - `PORTFOLIO_JSON`
    - `EXPERT_POSTS_JSON` (optional)
    - variable `EXPERT_FEED_URLS` (optional)
+   - variable `DIVIDEND_TICKERS` (optional, comma-separated tickers)
 3. Go to `Settings > Pages` and set source to `GitHub Actions`.
 4. Run the `ZSE Monitor and Pages` workflow manually once from the `Actions` tab.
 
@@ -58,6 +59,11 @@ Optional `EXPERT_POSTS_JSON` secret:
 ```
 
 Optional `EXPERT_FEED_URLS` repository variable accepts comma-separated RSS/feed URLs. Avoid storing Facebook login cookies or passwords in GitHub.
+
+Optional dividend setup:
+
+- Set repository variable `DIVIDEND_TICKERS` to a comma-separated list, for example `HT,ERNT,KOEI`.
+- Or add `"has_dividend": true` and optionally `"dividend_yield_pct": 3.2` to a position in `PORTFOLIO_JSON`.
 
 ## Backend
 

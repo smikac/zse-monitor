@@ -9,7 +9,7 @@ import pandas as pd
 from openai import OpenAI
 
 from config import InvestmentHorizon, PortfolioPosition, get_settings
-from models import ForumSignal, MarketQuote, Recommendation, SentimentResult, TechnicalAnalysis
+from models import AnnualForecast, ForumSignal, MarketQuote, Recommendation, SentimentResult, TechnicalAnalysis
 
 
 logger = logging.getLogger(__name__)
@@ -141,6 +141,80 @@ def infer_investment_horizon(
     if return_pct is not None and return_pct < -5 and technical.trend == "downtrend":
         return "short_term", "Gubitak uz slab trend traži disciplinu oko rizika."
     return "long_term", "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna."
+
+
+def build_annual_forecast(
+    quote: MarketQuote | None,
+    technical: TechnicalAnalysis,
+    recommendation: Recommendation | None,
+    has_dividend: bool,
+    sentiment: SentimentResult | None = None,
+) -> AnnualForecast:
+    drivers: list[str] = []
+    score = 0.0
+
+    if quote is None:
+        return AnnualForecast(
+            direction="NEUTRALNO",
+            confidence=0.25,
+            summary="Nema dovoljno tržišnih podataka za jednogodišnju prognozu.",
+            drivers=["nedostaje tržišna cijena"],
+        )
+
+    if technical.trend == "uptrend":
+        score += 1.4
+        drivers.append("cijena je iznad simuliranog MA50 trenda")
+    elif technical.trend == "downtrend":
+        score -= 1.4
+        drivers.append("cijena je ispod simuliranog MA50 trenda")
+    else:
+        drivers.append("tehnički trend je bočan")
+
+    if quote.change_pct >= 2:
+        score += 0.8
+        drivers.append("dnevni momentum je pozitivan")
+    elif quote.change_pct <= -2:
+        score -= 0.8
+        drivers.append("dnevni momentum je negativan")
+
+    if quote.turnover_eur >= 40_000:
+        score += 0.4
+        drivers.append("promet je povišen")
+    elif quote.turnover_eur == 0:
+        score -= 0.2
+        drivers.append("nema današnjeg prometa")
+
+    if has_dividend:
+        score += 0.5
+        drivers.append("dionica ima označenu dividendnu komponentu")
+
+    if sentiment and sentiment.sentiment == "bullish":
+        score += 0.5
+        drivers.append("sentiment je pozitivan")
+    elif sentiment and sentiment.sentiment == "bearish":
+        score -= 0.7
+        drivers.append("sentiment je negativan")
+
+    if recommendation:
+        if "PRODAJ" in recommendation.action:
+            score -= 1.0
+            drivers.append("sustav već daje prodajni signal")
+        elif "KUPI" in recommendation.action:
+            score += 0.8
+            drivers.append("sustav već daje kupovni signal")
+
+    if score >= 1.2:
+        direction = "RAST"
+        summary = "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik."
+    elif score <= -1.0:
+        direction = "PAD"
+        summary = "Model vidi povećan rizik pada ili slabijeg prinosa u sljedećih godinu dana."
+    else:
+        direction = "NEUTRALNO"
+        summary = "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja."
+
+    confidence = min(0.35 + abs(score) * 0.12, 0.82)
+    return AnnualForecast(direction=direction, confidence=round(confidence, 2), summary=summary, drivers=drivers[:5])
 
 
 def analyze_forum_board_signals(posts: list[dict[str, str]], known_tickers: set[str]) -> list[ForumSignal]:

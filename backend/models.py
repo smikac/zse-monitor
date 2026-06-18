@@ -46,6 +46,14 @@ class Recommendation:
 
 
 @dataclass(frozen=True)
+class AnnualForecast:
+    direction: Literal["RAST", "PAD", "NEUTRALNO"]
+    confidence: float
+    summary: str
+    drivers: list[str]
+
+
+@dataclass(frozen=True)
 class PortfolioAnalysis:
     ticker: str
     quantity: int
@@ -58,6 +66,9 @@ class PortfolioAnalysis:
     technical: TechnicalAnalysis
     sentiment: SentimentResult
     recommendation: Recommendation
+    has_dividend: bool
+    dividend_yield_pct: float | None
+    annual_forecast: AnnualForecast
     pnl_eur: float | None
     pnl_pct: float | None
     wow_event: bool
@@ -72,6 +83,9 @@ class MarketOpportunity:
     action: Literal["KUPI", "PRATI", "IZBJEGNI"]
     reason: str
     score: float
+    has_dividend: bool
+    dividend_yield_pct: float | None
+    annual_forecast: AnnualForecast
 
 
 @dataclass(frozen=True)

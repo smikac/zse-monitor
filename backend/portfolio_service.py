@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from analyzer import analyze_forum_board_signals, analyze_forum_sentiment, build_recommendation, calculate_technical_analysis, infer_investment_horizon
-from config import get_portfolio, get_settings
+from analyzer import analyze_forum_board_signals, analyze_forum_sentiment, build_annual_forecast, build_recommendation, calculate_technical_analysis, infer_investment_horizon
+from config import get_dividend_tickers, get_portfolio, get_settings
 from models import ForumSignal, MarketOpportunity, MarketQuote, PortfolioAnalysis
 from scrapers import scrape_dionice_board_posts, scrape_expert_commentary_posts, scrape_zse_market_data
 
@@ -11,6 +11,7 @@ from scrapers import scrape_dionice_board_posts, scrape_expert_commentary_posts,
 def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
     quotes = scrape_zse_market_data()
     analyses: list[PortfolioAnalysis] = []
+    dividend_tickers = get_dividend_tickers()
 
     for position in get_portfolio():
         ticker = position["ticker"]
@@ -22,6 +23,9 @@ def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
         decision_position = dict(position)
         decision_position["investment_horizon"] = investment_horizon
         recommendation = build_recommendation(decision_position, quote, technical, sentiment)
+        has_dividend = bool(position.get("has_dividend", ticker in dividend_tickers))
+        dividend_yield_pct = position.get("dividend_yield_pct")
+        annual_forecast = build_annual_forecast(quote, technical, recommendation, has_dividend, sentiment)
         analyses.append(
             PortfolioAnalysis(
                 ticker=ticker,
@@ -35,6 +39,9 @@ def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
                 technical=technical,
                 sentiment=sentiment,
                 recommendation=recommendation,
+                has_dividend=has_dividend,
+                dividend_yield_pct=dividend_yield_pct,
+                annual_forecast=annual_forecast,
                 pnl_eur=pnl_eur,
                 pnl_pct=pnl_pct,
                 wow_event=_is_wow_event(quote),
@@ -48,6 +55,7 @@ def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
 def analyze_market_opportunities(owned_tickers: set[str], limit: int = 12) -> list[MarketOpportunity]:
     quotes = scrape_zse_market_data(only_traded=True)
     opportunities: list[MarketOpportunity] = []
+    dividend_tickers = get_dividend_tickers()
 
     for ticker, quote in quotes.items():
         if ticker in owned_tickers or quote.turnover_eur < 2_000:
@@ -55,6 +63,8 @@ def analyze_market_opportunities(owned_tickers: set[str], limit: int = 12) -> li
 
         technical = calculate_technical_analysis(quote)
         action, reason, score = _score_market_opportunity(quote, technical)
+        has_dividend = ticker in dividend_tickers
+        annual_forecast = build_annual_forecast(quote, technical, None, has_dividend)
         opportunities.append(
             MarketOpportunity(
                 ticker=ticker,
@@ -63,6 +73,9 @@ def analyze_market_opportunities(owned_tickers: set[str], limit: int = 12) -> li
                 action=action,
                 reason=reason,
                 score=score,
+                has_dividend=has_dividend,
+                dividend_yield_pct=None,
+                annual_forecast=annual_forecast,
             )
         )
 

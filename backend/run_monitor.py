@@ -137,6 +137,7 @@ def _sanitize_public_positions(positions: list[dict]) -> list[dict]:
         sanitized["stop_loss"] = None
         sanitized["pnl_eur"] = None
         sanitized["pnl_pct"] = None
+        sanitized["dividend_yield_pct"] = None
         sanitized.pop("broker_current_price", None)
         sanitized.pop("broker_acquisition_value", None)
         sanitized.pop("broker_market_value", None)

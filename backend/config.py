@@ -22,6 +22,8 @@ class PortfolioPosition(TypedDict, total=False):
     broker_profit_eur: float
     broker_return_pct: float
     portfolio_weight_pct: float
+    has_dividend: bool
+    dividend_yield_pct: float
 
 
 @dataclass(frozen=True)
@@ -132,12 +134,23 @@ def _validate_position(item: dict) -> PortfolioPosition:
         "broker_profit_eur",
         "broker_return_pct",
         "portfolio_weight_pct",
+        "dividend_yield_pct",
     ):
         value = _optional_float(item, key)
         if value is not None:
             position[key] = value
 
+    if "has_dividend" in item:
+        position["has_dividend"] = _optional_bool(item, "has_dividend")
+
     return position
+
+
+def get_dividend_tickers() -> set[str]:
+    raw_tickers = os.getenv("DIVIDEND_TICKERS", "").strip()
+    if not raw_tickers:
+        return set()
+    return {ticker.strip().upper() for ticker in raw_tickers.replace("\n", ",").split(",") if ticker.strip()}
 
 
 def _optional_float(item: dict, key: str) -> float | None:
@@ -145,6 +158,13 @@ def _optional_float(item: dict, key: str) -> float | None:
     if value is None or value == "":
         return None
     return float(value)
+
+
+def _optional_bool(item: dict, key: str) -> bool:
+    value = item.get(key)
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().lower() in {"1", "true", "yes", "da", "y"}
 
 
 def _default_target_price(average_buy_price: float, current_price: float | None) -> float:
