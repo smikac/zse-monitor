@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from analyzer import analyze_forum_sentiment, build_recommendation, calculate_technical_analysis
+from analyzer import analyze_forum_sentiment, build_recommendation, calculate_technical_analysis, infer_investment_horizon
 from config import get_portfolio, get_settings
 from models import MarketQuote, PortfolioAnalysis
 from scrapers import scrape_dionice_forum, scrape_mojedionice
@@ -18,8 +18,11 @@ def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
         forum_comments = scrape_dionice_forum(ticker)
         technical = calculate_technical_analysis(quote)
         sentiment = analyze_forum_sentiment(ticker, forum_comments)
-        recommendation = build_recommendation(position, quote, technical, sentiment)
         pnl_eur, pnl_pct = _calculate_pnl(position["kolicina"], position["prosjecna_kupovna_cijena"], quote)
+        investment_horizon, horizon_reason = infer_investment_horizon(position, quote, technical, sentiment, pnl_pct)
+        decision_position = dict(position)
+        decision_position["investment_horizon"] = investment_horizon
+        recommendation = build_recommendation(decision_position, quote, technical, sentiment)
         analyses.append(
             PortfolioAnalysis(
                 ticker=ticker,
@@ -27,7 +30,8 @@ def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
                 average_buy_price=position["prosjecna_kupovna_cijena"],
                 target_price=position["target_price"],
                 stop_loss=position["stop_loss"],
-                investment_horizon=position["investment_horizon"],
+                investment_horizon=investment_horizon,
+                horizon_reason=horizon_reason,
                 quote=quote,
                 technical=technical,
                 sentiment=sentiment,

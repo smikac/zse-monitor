@@ -9,13 +9,19 @@ from typing import Literal, TypedDict
 InvestmentHorizon = Literal["short_term", "long_term"]
 
 
-class PortfolioPosition(TypedDict):
+class PortfolioPosition(TypedDict, total=False):
     ticker: str
     kolicina: int
     prosjecna_kupovna_cijena: float
     target_price: float
     stop_loss: float
     investment_horizon: InvestmentHorizon
+    broker_current_price: float
+    broker_acquisition_value: float
+    broker_market_value: float
+    broker_profit_eur: float
+    broker_return_pct: float
+    portfolio_weight_pct: float
 
 
 @dataclass(frozen=True)
@@ -35,7 +41,6 @@ EXAMPLE_PORTFOLIO: list[PortfolioPosition] = [
         "prosjecna_kupovna_cijena": 1000.0,
         "target_price": 1200.0,
         "stop_loss": 900.0,
-        "investment_horizon": "long_term",
     }
 ]
 
@@ -70,14 +75,52 @@ def get_portfolio() -> list[PortfolioPosition]:
 
 def _validate_position(item: dict) -> PortfolioPosition:
     horizon = item.get("investment_horizon")
-    if horizon not in {"short_term", "long_term"}:
+    if horizon is not None and horizon not in {"short_term", "long_term"}:
         raise ValueError("investment_horizon must be 'short_term' or 'long_term'.")
 
-    return {
+    average_buy_price = float(item["prosjecna_kupovna_cijena"])
+    broker_current_price = _optional_float(item, "broker_current_price")
+    position: PortfolioPosition = {
         "ticker": str(item["ticker"]).upper().strip(),
         "kolicina": int(item["kolicina"]),
-        "prosjecna_kupovna_cijena": float(item["prosjecna_kupovna_cijena"]),
-        "target_price": float(item["target_price"]),
-        "stop_loss": float(item["stop_loss"]),
-        "investment_horizon": horizon,
+        "prosjecna_kupovna_cijena": average_buy_price,
+        "target_price": _optional_float(item, "target_price") or _default_target_price(average_buy_price, broker_current_price),
+        "stop_loss": _optional_float(item, "stop_loss") or _default_stop_loss(average_buy_price, broker_current_price),
     }
+
+    if horizon is not None:
+        position["investment_horizon"] = horizon
+
+    for key in (
+        "broker_current_price",
+        "broker_acquisition_value",
+        "broker_market_value",
+        "broker_profit_eur",
+        "broker_return_pct",
+        "portfolio_weight_pct",
+    ):
+        value = _optional_float(item, key)
+        if value is not None:
+            position[key] = value
+
+    return position
+
+
+def _optional_float(item: dict, key: str) -> float | None:
+    value = item.get(key)
+    if value is None or value == "":
+        return None
+    return float(value)
+
+
+def _default_target_price(average_buy_price: float, current_price: float | None) -> float:
+    reference_price = current_price or average_buy_price
+    return round(reference_price * 1.15, 4)
+
+
+def _default_stop_loss(average_buy_price: float, current_price: float | None) -> float:
+    if current_price is None:
+        return round(average_buy_price * 0.85, 4)
+    if current_price > average_buy_price:
+        return round(max(average_buy_price * 0.95, current_price * 0.85), 4)
+    return round(current_price * 0.9, 4)

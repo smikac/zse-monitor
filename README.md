@@ -22,7 +22,7 @@ The workflow runs every 5 minutes during the relevant weekday UTC window, but `b
 - 17:00 Europe/Zagreb daily summary
 
 The generated dashboard data is written to `frontend/public/data/portfolio.json` and published with the React app.
-The published dashboard payload is sanitized: quantities, average buy prices, and P&L are removed before publishing.
+The published dashboard payload is sanitized: quantities, average buy prices, target prices, stop-loss values, and P&L are removed before publishing.
 
 Example `PORTFOLIO_JSON` secret:
 
@@ -32,9 +32,12 @@ Example `PORTFOLIO_JSON` secret:
     "ticker": "KODT",
     "kolicina": 10,
     "prosjecna_kupovna_cijena": 1550.0,
-    "target_price": 1900.0,
-    "stop_loss": 1350.0,
-    "investment_horizon": "long_term"
+    "broker_current_price": 1875.0,
+    "broker_acquisition_value": 15500.0,
+    "broker_market_value": 18750.0,
+    "broker_profit_eur": 3250.0,
+    "broker_return_pct": 20.97,
+    "portfolio_weight_pct": 12.5
   }
 ]
 ```

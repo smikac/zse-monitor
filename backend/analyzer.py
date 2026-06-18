@@ -8,7 +8,7 @@ from typing import Any
 import pandas as pd
 from openai import OpenAI
 
-from config import PortfolioPosition, get_settings
+from config import InvestmentHorizon, PortfolioPosition, get_settings
 from models import MarketQuote, Recommendation, SentimentResult, TechnicalAnalysis
 
 
@@ -113,6 +113,34 @@ def build_recommendation(
     if extreme_target_break:
         return Recommendation(action="PRODAJ / DJELOMIČNA PRODAJA", reason="Cijena je ekstremno odskočila iznad targeta.", urgent=True)
     return Recommendation(action="ZADRŽI DUGOROČNO", reason="Dugoročni horizont ignorira kratkoročni šum.", urgent=False)
+
+
+def infer_investment_horizon(
+    position: PortfolioPosition,
+    quote: MarketQuote | None,
+    technical: TechnicalAnalysis,
+    sentiment: SentimentResult,
+    pnl_pct: float | None,
+) -> tuple[InvestmentHorizon, str]:
+    configured_horizon = position.get("investment_horizon")
+    if configured_horizon in {"short_term", "long_term"}:
+        return configured_horizon, "Ručno zadano u portfelju."
+
+    return_pct = pnl_pct if pnl_pct is not None else position.get("broker_return_pct")
+    portfolio_weight_pct = position.get("portfolio_weight_pct", 0.0)
+    change_pct = abs(quote.change_pct) if quote is not None else 0.0
+
+    if sentiment.sentiment == "bearish" and technical.trend == "downtrend":
+        return "short_term", "Bearish sentiment i slab tehnički trend traže aktivnije praćenje."
+    if return_pct is not None and return_pct >= 60:
+        return "short_term", "Vrlo visok prinos sugerira taktičko upravljanje profitom."
+    if technical.rsi >= 70 or change_pct >= 4:
+        return "short_term", "Povišen momentum ili volatilnost sugerira kratkoročni režim praćenja."
+    if portfolio_weight_pct >= 10 and sentiment.sentiment in {"bullish", "neutral"} and technical.trend != "downtrend":
+        return "long_term", "Veći udio u portfelju i miran sentiment podržavaju dugoročno držanje."
+    if return_pct is not None and return_pct < -5 and technical.trend == "downtrend":
+        return "short_term", "Gubitak uz slab trend traži disciplinu oko rizika."
+    return "long_term", "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna."
 
 
 def _simulate_price_history(last_price: float, change_pct: float) -> list[float]:

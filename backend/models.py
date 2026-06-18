@@ -48,6 +48,7 @@ class PortfolioAnalysis:
     target_price: float
     stop_loss: float
     investment_horizon: InvestmentHorizon
+    horizon_reason: str
     quote: MarketQuote | None
     technical: TechnicalAnalysis
     sentiment: SentimentResult
