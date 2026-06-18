@@ -14,6 +14,7 @@ from models import DividendInfo, MarketQuote
 
 ZSE_TRADING_PRICE_LIST_URL = "https://zse.hr/json/TradingPriceList"
 ZSE_DIVIDEND_DATA_URL = "https://zse.hr/json/XZAG-WebDividendData.json"
+MOJEDIONICE_DIVIDEND_CALENDAR_URL = "https://www.mojedionice.com/fund/KalendarDividendi.aspx"
 ZSE_MARKET_SEGMENTS = "RP,RO,RR,TJDD,UT,TZIF,RGHT,DMTF,FMTF,SS,MF,MA,MX,TEST"
 DIONICE_BOARD_URL = "https://dionice.net/forum/board/2-dionice/"
 USER_AGENT = (
@@ -69,6 +70,59 @@ def scrape_zse_market_data(only_traded: bool = False) -> dict[str, MarketQuote]:
 
 def scrape_mojedionice() -> dict[str, MarketQuote]:
     return scrape_zse_market_data()
+
+
+def scrape_dividends(year: int = 2026) -> dict[str, DividendInfo]:
+    dividends = scrape_zse_dividends()
+    mojedionice_dividends = scrape_mojedionice_dividends(year)
+    if mojedionice_dividends:
+        dividends.update(mojedionice_dividends)
+    return dividends
+
+
+def scrape_mojedionice_dividends(year: int = 2026) -> dict[str, DividendInfo]:
+    settings = get_settings()
+    try:
+        response = requests.get(
+            MOJEDIONICE_DIVIDEND_CALENDAR_URL,
+            params={"god": str(year)},
+            headers={**_headers(), "Accept": "text/html,application/xhtml+xml", "Referer": "https://www.mojedionice.com/"},
+            timeout=settings.request_timeout_seconds,
+        )
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        logger.warning("MojeDionice dividend calendar fetch failed: %s", exc)
+        return {}
+
+    soup = BeautifulSoup(response.text, "lxml")
+    dividends: dict[str, DividendInfo] = {}
+    for row in soup.select("tr"):
+        cells = [_normalize_space(cell.get_text(" ", strip=True).replace("\xa0", " ")) for cell in row.find_all("td")]
+        if len(cells) < 11 or not cells[1]:
+            continue
+
+        raw_symbol = cells[1].upper()
+        ticker = _mojedionice_symbol_to_ticker(raw_symbol)
+        if not ticker:
+            continue
+
+        amount = _safe_croatian_float(cells[2])
+        if amount <= 0:
+            continue
+
+        dividends[ticker] = DividendInfo(
+            ticker=ticker,
+            amount_per_share=amount,
+            currency="EUR",
+            ex_date=_parse_mojedionice_date(cells[7]),
+            record_date=_parse_mojedionice_date(cells[8]),
+            payment_date=_parse_mojedionice_date(cells[10]),
+            status=f"MojeDionice {year}",
+        )
+
+    if not dividends:
+        logger.warning("No dividends parsed from MojeDionice dividend calendar.")
+    return dividends
 
 
 def scrape_zse_dividends() -> dict[str, DividendInfo]:
@@ -330,7 +384,35 @@ def _field_float(row: dict[str, Any], *keys: str) -> float:
 def _dividend_priority(info: DividendInfo) -> tuple[int, str, float]:
     status = info.status.lower()
     status_score = 2 if "voted" in status else 1 if "proposed" in status else 0
+    if "mojedionice" in status:
+        status_score = 3
     return status_score, info.payment_date, info.amount_per_share
+
+
+def _mojedionice_symbol_to_ticker(symbol: str) -> str:
+    aliases = {
+        "ZTOS": "ZITO",
+    }
+    base = symbol.split("-")[0].strip()
+    return aliases.get(base, base)
+
+
+def _parse_mojedionice_date(value: str) -> str:
+    cleaned = value.lower().replace("do", "").replace("od", "").strip()
+    match = re.search(r"(\d{2})\.(\d{2})\.(\d{2,4})", cleaned)
+    if not match:
+        return ""
+    day, month, year = match.groups()
+    if len(year) == 2:
+        year = f"20{year}"
+    return f"{year}-{month}-{day}"
+
+
+def _safe_croatian_float(value: str) -> float:
+    try:
+        return parse_croatian_float(value)
+    except ValueError:
+        return 0.0
 
 
 def _known_zse_keys() -> tuple[str, ...]:

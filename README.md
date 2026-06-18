@@ -60,9 +60,10 @@ Optional `EXPERT_POSTS_JSON` secret:
 
 Optional `EXPERT_FEED_URLS` repository variable accepts comma-separated RSS/feed URLs. Avoid storing Facebook login cookies or passwords in GitHub.
 
-Dividend data is read automatically from the official ZSE dividend feed:
+Dividend data is read automatically from MojeDionice dividend calendar, with ZSE dividend feed as fallback:
 
-- Source: `https://zse.hr/json/XZAG-WebDividendData.json`.
+- Primary source: `https://www.mojedionice.com/fund/KalendarDividendi.aspx?god=2026`.
+- Fallback source: `https://zse.hr/json/XZAG-WebDividendData.json`.
 - Optional fallback: set repository variable `DIVIDEND_TICKERS` to a comma-separated list if ZSE data is temporarily unavailable.
 - You can still add `"has_dividend": true` and optionally `"dividend_yield_pct": 3.2` to a position in `PORTFOLIO_JSON`.
 

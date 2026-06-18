@@ -5,14 +5,14 @@ from datetime import datetime
 from analyzer import analyze_forum_board_signals, analyze_forum_sentiment, build_annual_forecast, build_recommendation, calculate_technical_analysis, infer_investment_horizon
 from config import get_dividend_tickers, get_portfolio, get_settings
 from models import DividendInfo, ForumSignal, MarketOpportunity, MarketQuote, PortfolioAnalysis
-from scrapers import scrape_dionice_board_posts, scrape_expert_commentary_posts, scrape_zse_dividends, scrape_zse_market_data
+from scrapers import scrape_dionice_board_posts, scrape_dividends, scrape_expert_commentary_posts, scrape_zse_market_data
 
 
 def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
     quotes = scrape_zse_market_data()
     analyses: list[PortfolioAnalysis] = []
     dividend_tickers = get_dividend_tickers()
-    dividends = scrape_zse_dividends()
+    dividends = scrape_dividends()
 
     for position in get_portfolio():
         ticker = position["ticker"]
@@ -63,7 +63,7 @@ def analyze_market_opportunities(owned_tickers: set[str], limit: int = 12) -> li
     quotes = scrape_zse_market_data(only_traded=True)
     opportunities: list[MarketOpportunity] = []
     dividend_tickers = get_dividend_tickers()
-    dividends = scrape_zse_dividends()
+    dividends = scrape_dividends()
 
     for ticker, quote in quotes.items():
         if ticker in owned_tickers or quote.turnover_eur < 2_000:
