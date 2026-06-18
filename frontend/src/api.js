@@ -10,6 +10,8 @@ export async function fetchPortfolio() {
     return {
       positions: payload.positions ?? [],
       opportunities: payload.opportunities ?? [],
+      forumSignals: payload.forum_signals ?? [],
+      expertSignals: payload.expert_signals ?? [],
     };
   }
 
@@ -19,6 +21,11 @@ export async function fetchPortfolio() {
   }
   const payload = await response.json();
   return Array.isArray(payload)
-    ? { positions: payload, opportunities: [] }
-    : { positions: payload.positions ?? [], opportunities: payload.opportunities ?? [] };
+    ? { positions: payload, opportunities: [], forumSignals: [] }
+    : {
+        positions: payload.positions ?? [],
+        opportunities: payload.opportunities ?? [],
+        forumSignals: payload.forum_signals ?? [],
+        expertSignals: payload.expert_signals ?? [],
+      };
 }

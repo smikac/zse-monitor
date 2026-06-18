@@ -72,3 +72,12 @@ class MarketOpportunity:
     action: Literal["KUPI", "PRATI", "IZBJEGNI"]
     reason: str
     score: float
+
+
+@dataclass(frozen=True)
+class ForumSignal:
+    ticker: str
+    action: Literal["KUPI", "PRODAJ", "PRATI"]
+    summary: str
+    source_url: str
+    confidence: float

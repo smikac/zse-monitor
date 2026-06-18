@@ -73,6 +73,40 @@ def get_portfolio() -> list[PortfolioPosition]:
     return portfolio
 
 
+def get_expert_posts() -> list[dict[str, str]]:
+    raw_posts = os.getenv("EXPERT_POSTS_JSON", "").strip()
+    if not raw_posts:
+        return []
+
+    parsed = json.loads(raw_posts)
+    if not isinstance(parsed, list):
+        raise ValueError("EXPERT_POSTS_JSON must be a JSON array.")
+
+    posts: list[dict[str, str]] = []
+    for item in parsed:
+        if not isinstance(item, dict):
+            continue
+        text = str(item.get("text", "")).strip()
+        if not text:
+            continue
+        posts.append(
+            {
+                "title": str(item.get("title", "Expert commentary")).strip(),
+                "text": text[:1800],
+                "url": str(item.get("url", "")).strip(),
+                "source": str(item.get("source", "expert")).strip(),
+            }
+        )
+    return posts
+
+
+def get_expert_feed_urls() -> list[str]:
+    raw_urls = os.getenv("EXPERT_FEED_URLS", "").strip()
+    if not raw_urls:
+        return []
+    return [url.strip() for url in raw_urls.replace("\n", ",").split(",") if url.strip()]
+
+
 def _validate_position(item: dict) -> PortfolioPosition:
     horizon = item.get("investment_horizon")
     if horizon is not None and horizon not in {"short_term", "long_term"}:

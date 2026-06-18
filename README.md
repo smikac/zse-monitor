@@ -12,6 +12,8 @@ Use GitHub Actions for scheduled monitoring and GitHub Pages for the dashboard.
    - `TELEGRAM_CHAT_ID`
    - `OPENAI_API_KEY`
    - `PORTFOLIO_JSON`
+   - `EXPERT_POSTS_JSON` (optional)
+   - variable `EXPERT_FEED_URLS` (optional)
 3. Go to `Settings > Pages` and set source to `GitHub Actions`.
 4. Run the `ZSE Monitor and Pages` workflow manually once from the `Actions` tab.
 
@@ -41,6 +43,21 @@ Example `PORTFOLIO_JSON` secret:
   }
 ]
 ```
+
+Optional `EXPERT_POSTS_JSON` secret:
+
+```json
+[
+  {
+    "source": "Nenad Bakic Facebook",
+    "title": "Objava o ZSE temi",
+    "text": "Ovdje zalijepi tekst bitne javne objave.",
+    "url": "https://www.facebook.com/nenad.bakic"
+  }
+]
+```
+
+Optional `EXPERT_FEED_URLS` repository variable accepts comma-separated RSS/feed URLs. Avoid storing Facebook login cookies or passwords in GitHub.
 
 ## Backend
 

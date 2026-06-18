@@ -9,8 +9,8 @@ from zoneinfo import ZoneInfo
 
 import azure.functions as func
 
-from notifier import build_alert_message, build_daily_summary, send_telegram_message
-from portfolio_service import analyze_market_opportunities, analyze_portfolio
+from notifier import build_signal_digest, send_telegram_message
+from portfolio_service import analyze_expert_signals, analyze_forum_signals, analyze_market_opportunities, analyze_portfolio
 
 
 app = func.FunctionApp()
@@ -36,11 +36,16 @@ def get_portfolio(req: func.HttpRequest) -> func.HttpResponse:
     checked_at = datetime.now(timezone.utc)
     analyses = analyze_portfolio(checked_at)
     opportunities = analyze_market_opportunities({item.ticker for item in analyses})
+    known_tickers = {item.ticker for item in analyses} | {item.ticker for item in opportunities}
+    forum_signals = analyze_forum_signals(known_tickers)
+    expert_signals = analyze_expert_signals(known_tickers)
     return func.HttpResponse(
         json.dumps(
             {
                 "positions": [_to_jsonable(item) for item in analyses],
                 "opportunities": [_to_jsonable(item) for item in opportunities],
+                "forum_signals": [_to_jsonable(item) for item in forum_signals],
+                "expert_signals": [_to_jsonable(item) for item in expert_signals],
             },
             ensure_ascii=False,
         ),
@@ -54,14 +59,15 @@ def _run_market_check(check_type: str) -> None:
     checked_at = datetime.now(ZAGREB_TZ)
     logger.info("Starting ZSE %s check at %s", check_type, checked_at.isoformat())
     analyses = analyze_portfolio(checked_at)
-
-    if check_type in {"morning", "tactical"}:
-        for item in analyses:
-            if item.wow_event or item.recommendation.urgent:
-                send_telegram_message(build_alert_message(item, checked_at))
+    opportunities = analyze_market_opportunities({item.ticker for item in analyses})
+    known_tickers = {item.ticker for item in analyses} | {item.ticker for item in opportunities}
+    forum_signals = analyze_forum_signals(known_tickers)
+    expert_signals = analyze_expert_signals(known_tickers)
+    message = build_signal_digest(analyses, opportunities, forum_signals, expert_signals, checked_at)
+    if message is None:
+        logger.info("No interesting ZSE signal found; Telegram skipped.")
         return
-
-    send_telegram_message(build_daily_summary(analyses, checked_at))
+    send_telegram_message(message)
 
 
 def _current_scheduled_check() -> str | None:

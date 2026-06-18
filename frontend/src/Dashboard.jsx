@@ -5,6 +5,9 @@ import { fetchPortfolio } from "./api.js";
 export default function Dashboard() {
   const [positions, setPositions] = useState([]);
   const [opportunities, setOpportunities] = useState([]);
+  const [forumSignals, setForumSignals] = useState([]);
+  const [expertSignals, setExpertSignals] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -15,6 +18,8 @@ export default function Dashboard() {
       const data = await fetchPortfolio();
       setPositions(data.positions);
       setOpportunities(data.opportunities);
+      setForumSignals(data.forumSignals);
+      setExpertSignals(data.expertSignals);
     } catch (err) {
       setError("Nije moguće dohvatiti portfelj. Prikaz provjeri nakon dostupnosti API-ja.");
     } finally {
@@ -31,6 +36,11 @@ export default function Dashboard() {
     [positions],
   );
 
+  async function checkNow() {
+    await loadPortfolio();
+    setModalOpen(true);
+  }
+
   return (
     <main className="dashboard">
       <header className="topbar">
@@ -38,9 +48,9 @@ export default function Dashboard() {
           <p className="eyebrow">Zagrebačka burza</p>
           <h1>Portfelj i signali</h1>
         </div>
-        <button className="iconButton" onClick={loadPortfolio} disabled={loading} aria-label="Osvježi podatke">
+        <button className="iconButton" onClick={checkNow} disabled={loading} aria-label="Provjeri stanje">
           <RefreshCw size={18} />
-          <span>{loading ? "Osvježavam" : "Osvježi"}</span>
+          <span>{loading ? "Provjeravam" : "Provjeri stanje"}</span>
         </button>
       </header>
 
@@ -77,6 +87,16 @@ export default function Dashboard() {
         </div>
         <OpportunityTable opportunities={opportunities} loading={loading} />
       </section>
+
+      {modalOpen && (
+        <StatusModal
+          alerts={alerts}
+          opportunities={opportunities}
+          forumSignals={forumSignals}
+          expertSignals={expertSignals}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
     </main>
   );
 }
@@ -116,7 +136,6 @@ function PortfolioTable({ positions, loading }) {
           <tr>
             <th>Ticker</th>
             <th>Cijena</th>
-            <th>P&L</th>
             <th>Tehnika</th>
             <th>AI sažetak</th>
             <th>Zadnja provjera</th>
@@ -138,10 +157,6 @@ function PortfolioTable({ positions, loading }) {
                   {item.quote?.change_pct >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
                   {formatPercent(item.quote?.change_pct)}
                 </span>
-              </td>
-              <td className={item.pnl_eur >= 0 ? "positive" : "negative"}>
-                {formatCurrency(item.pnl_eur)}
-                <span className="subtle">{formatPercent(item.pnl_pct)}</span>
               </td>
               <td>
                 <Badge tone={technicalTone(item.technical?.trend)}>{item.technical?.status ?? "N/A"}</Badge>
@@ -202,6 +217,101 @@ function OpportunityTable({ opportunities, loading }) {
         </tbody>
       </table>
     </div>
+  );
+}
+
+function StatusModal({ alerts, opportunities, forumSignals, expertSignals, onClose }) {
+  const buyIdeas = opportunities.filter((item) => item.action === "KUPI");
+  const relevantForumSignals = forumSignals.filter((item) => item.action === "KUPI" || item.action === "PRODAJ");
+  const relevantExpertSignals = expertSignals.filter((item) => item.action === "KUPI" || item.action === "PRODAJ");
+  const hasSignals = alerts.length > 0 || buyIdeas.length > 0 || relevantForumSignals.length > 0 || relevantExpertSignals.length > 0;
+
+  return (
+    <div className="modalBackdrop" role="presentation" onClick={onClose}>
+      <section className="modalPanel" role="dialog" aria-modal="true" aria-label="Provjera stanja" onClick={(event) => event.stopPropagation()}>
+        <div className="modalHeader">
+          <h2>Provjera stanja</h2>
+          <button className="closeButton" onClick={onClose} aria-label="Zatvori">x</button>
+        </div>
+
+        {!hasSignals && <p className="modalEmpty">Nema hitnih prodaja, jakih kupovnih kandidata ni bitnih forum signala.</p>}
+
+        {alerts.length > 0 && (
+          <SignalGroup title="Hitno prodati">
+            {alerts.map((item) => (
+              <SignalItem
+                key={item.ticker}
+                tone="danger"
+                title={`${item.ticker} · ${item.recommendation.action}`}
+                meta={`${formatCurrency(item.quote?.last_price)} · ${formatPercent(item.quote?.change_pct)}`}
+                text={item.recommendation.reason}
+              />
+            ))}
+          </SignalGroup>
+        )}
+
+        {buyIdeas.length > 0 && (
+          <SignalGroup title="Zanimljivo za kupiti">
+            {buyIdeas.slice(0, 6).map((item) => (
+              <SignalItem
+                key={item.ticker}
+                tone="success"
+                title={`${item.ticker} · ${item.action}`}
+                meta={`${formatCurrency(item.quote?.last_price)} · ${formatPercent(item.quote?.change_pct)} · promet ${formatCurrency(item.quote?.turnover_eur)}`}
+                text={item.reason}
+              />
+            ))}
+          </SignalGroup>
+        )}
+
+        {relevantForumSignals.length > 0 && (
+          <SignalGroup title="Forum signali">
+            {relevantForumSignals.slice(0, 6).map((item) => (
+              <SignalItem
+                key={`${item.ticker}-${item.source_url}`}
+                tone={item.action === "PRODAJ" ? "danger" : "success"}
+                title={`${item.ticker} · ${item.action}`}
+                meta={`pouzdanost ${Math.round((item.confidence ?? 0) * 100)}%`}
+                text={item.summary}
+              />
+            ))}
+          </SignalGroup>
+        )}
+
+        {relevantExpertSignals.length > 0 && (
+          <SignalGroup title="Expert komentari">
+            {relevantExpertSignals.slice(0, 6).map((item) => (
+              <SignalItem
+                key={`${item.ticker}-${item.source_url}`}
+                tone={item.action === "PRODAJ" ? "danger" : "success"}
+                title={`${item.ticker} · ${item.action}`}
+                meta={`pouzdanost ${Math.round((item.confidence ?? 0) * 100)}%`}
+                text={item.summary}
+              />
+            ))}
+          </SignalGroup>
+        )}
+      </section>
+    </div>
+  );
+}
+
+function SignalGroup({ title, children }) {
+  return (
+    <div className="signalGroup">
+      <h3>{title}</h3>
+      <div className="signalList">{children}</div>
+    </div>
+  );
+}
+
+function SignalItem({ tone, title, meta, text }) {
+  return (
+    <article className={`signalItem ${tone}`}>
+      <strong>{title}</strong>
+      <span>{meta}</span>
+      <p>{text}</p>
+    </article>
   );
 }
 

@@ -3,15 +3,18 @@ from __future__ import annotations
 import logging
 import re
 from typing import Any
+from urllib.parse import urljoin
 
 import requests
+from bs4 import BeautifulSoup
 
-from config import get_settings
+from config import get_expert_feed_urls, get_expert_posts, get_settings
 from models import MarketQuote
 
 
 ZSE_TRADING_PRICE_LIST_URL = "https://zse.hr/json/TradingPriceList"
 ZSE_MARKET_SEGMENTS = "RP,RO,RR,TJDD,UT,TZIF,RGHT,DMTF,FMTF,SS,MF,MA,MX,TEST"
+DIONICE_BOARD_URL = "https://dionice.net/forum/board/2-dionice/"
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
@@ -68,7 +71,144 @@ def scrape_mojedionice() -> dict[str, MarketQuote]:
 
 
 def scrape_dionice_forum(ticker: str) -> list[str]:
-    return []
+    ticker_upper = ticker.upper()
+    return [
+        post["text"]
+        for post in scrape_dionice_board_posts()
+        if ticker_upper in post["text"].upper()
+    ][:15]
+
+
+def scrape_dionice_board_posts(limit: int = 12) -> list[dict[str, str]]:
+    settings = get_settings()
+    try:
+        response = requests.get(
+            DIONICE_BOARD_URL,
+            headers={**_headers(), "Accept": "text/html,application/xhtml+xml"},
+            timeout=settings.request_timeout_seconds,
+        )
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        logger.warning("Dionice.net board scraping failed: %s", exc)
+        return []
+
+    soup = BeautifulSoup(response.text, "lxml")
+    posts: list[dict[str, str]] = []
+    seen_urls: set[str] = set()
+
+    for link in soup.select("a[href]"):
+        href = str(link.get("href", ""))
+        title = link.get_text(" ", strip=True)
+        if not title or len(title) < 3:
+            continue
+        if not any(pattern in href for pattern in ("/forum/tema/", "/forum/thread/", "/forum/post/", "/forum/topic/")):
+            continue
+        url = urljoin(DIONICE_BOARD_URL, href)
+        if url in seen_urls:
+            continue
+        seen_urls.add(url)
+        surrounding_text = _fetch_forum_topic_excerpt(url) or (link.find_parent().get_text(" ", strip=True) if link.find_parent() else title)
+        posts.append(
+            {
+                "title": title[:180],
+                "text": _normalize_space(f"{title}. {surrounding_text}")[:1200],
+                "url": url,
+            }
+        )
+        if len(posts) >= limit:
+            break
+
+    return posts
+
+
+def scrape_expert_commentary_posts(limit_per_feed: int = 8) -> list[dict[str, str]]:
+    posts = get_expert_posts()
+    settings = get_settings()
+
+    for feed_url in get_expert_feed_urls():
+        try:
+            response = requests.get(
+                feed_url,
+                headers=_headers(),
+                timeout=settings.request_timeout_seconds,
+            )
+            response.raise_for_status()
+        except requests.RequestException as exc:
+            logger.warning("Expert feed fetch failed for %s: %s", feed_url, exc)
+            continue
+
+        soup = BeautifulSoup(response.text, "xml")
+        feed_items = soup.find_all(["item", "entry"])[:limit_per_feed]
+        if feed_items:
+            posts.extend(_parse_feed_items(feed_items, feed_url))
+            continue
+
+        html_soup = BeautifulSoup(response.text, "lxml")
+        posts.extend(_parse_html_expert_page(html_soup, feed_url, limit_per_feed))
+
+    return posts[:30]
+
+
+def _fetch_forum_topic_excerpt(url: str) -> str:
+    settings = get_settings()
+    try:
+        response = requests.get(
+            url,
+            headers={**_headers(), "Accept": "text/html,application/xhtml+xml"},
+            timeout=settings.request_timeout_seconds,
+        )
+        response.raise_for_status()
+    except requests.RequestException:
+        return ""
+
+    soup = BeautifulSoup(response.text, "lxml")
+    candidates = soup.select(".messageText, .messageBody, .message, article, .htmlContent")
+    texts = [_normalize_space(item.get_text(" ", strip=True)) for item in candidates]
+    texts = [text for text in texts if len(text) > 40]
+    return " ".join(texts[-3:])[:1400]
+
+
+def _parse_feed_items(feed_items: list, feed_url: str) -> list[dict[str, str]]:
+    posts: list[dict[str, str]] = []
+    for item in feed_items:
+        title = _tag_text(item, "title") or "Expert commentary"
+        link = _tag_text(item, "link")
+        if not link:
+            link_tag = item.find("link")
+            link = str(link_tag.get("href", "")) if link_tag and link_tag.has_attr("href") else feed_url
+        summary = _tag_text(item, "description") or _tag_text(item, "summary") or _tag_text(item, "content") or title
+        posts.append(
+            {
+                "title": _normalize_space(title)[:180],
+                "text": _normalize_space(f"{title}. {BeautifulSoup(summary, 'lxml').get_text(' ', strip=True)}")[:1800],
+                "url": link.strip(),
+                "source": feed_url,
+            }
+        )
+    return posts
+
+
+def _parse_html_expert_page(soup: BeautifulSoup, source_url: str, limit: int) -> list[dict[str, str]]:
+    posts: list[dict[str, str]] = []
+    for item in soup.select("article, .post, .entry, [role='article']")[:limit]:
+        text = _normalize_space(item.get_text(" ", strip=True))
+        if len(text) < 60:
+            continue
+        link = item.find("a", href=True)
+        posts.append(
+            {
+                "title": text[:120],
+                "text": text[:1800],
+                "url": urljoin(source_url, str(link["href"])) if link else source_url,
+                "source": source_url,
+            }
+        )
+    return posts
+
+
+def _tag_text(item, tag_name: str) -> str:
+    tag = item.find(tag_name)
+    return tag.get_text(" ", strip=True) if tag else ""
 
 
 def parse_croatian_float(value: str) -> float:
@@ -179,3 +319,7 @@ def _known_zse_keys() -> tuple[str, ...]:
         "IsTraded",
         "date",
     )
+
+
+def _normalize_space(value: str) -> str:
+    return re.sub(r"\s+", " ", value).strip()

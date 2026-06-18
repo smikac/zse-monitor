@@ -51,6 +51,8 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           PORTFOLIO_JSON: ${{ secrets.PORTFOLIO_JSON }}
+          EXPERT_POSTS_JSON: ${{ secrets.EXPERT_POSTS_JSON }}
+          EXPERT_FEED_URLS: ${{ vars.EXPERT_FEED_URLS }}
           WOW_TURNOVER_THRESHOLD_EUR: ${{ vars.WOW_TURNOVER_THRESHOLD_EUR || '40000' }}
           WOW_PRICE_CHANGE_THRESHOLD_PCT: ${{ vars.WOW_PRICE_CHANGE_THRESHOLD_PCT || '4' }}
           REQUEST_TIMEOUT_SECONDS: ${{ vars.REQUEST_TIMEOUT_SECONDS || '20' }}

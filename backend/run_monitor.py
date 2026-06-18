@@ -9,8 +9,8 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from json_utils import to_jsonable
-from notifier import build_alert_message, build_daily_summary, send_telegram_message
-from portfolio_service import analyze_market_opportunities, analyze_portfolio
+from notifier import build_signal_digest, send_telegram_message
+from portfolio_service import analyze_expert_signals, analyze_forum_signals, analyze_market_opportunities, analyze_portfolio
 
 
 ZAGREB_TZ = ZoneInfo("Europe/Zagreb")
@@ -48,8 +48,11 @@ def main() -> int:
     analyses = analyze_portfolio(checked_at)
     owned_tickers = {item.ticker for item in analyses}
     opportunities = analyze_market_opportunities(owned_tickers)
-    _send_notifications(check_type, analyses, checked_at)
-    _write_dashboard_payload(previous_payload, check_type, analyses, opportunities, checked_at)
+    known_tickers = owned_tickers | {item.ticker for item in opportunities}
+    forum_signals = analyze_forum_signals(known_tickers)
+    expert_signals = analyze_expert_signals(known_tickers)
+    _send_notifications(analyses, opportunities, forum_signals, expert_signals, checked_at)
+    _write_dashboard_payload(previous_payload, check_type, analyses, opportunities, forum_signals, expert_signals, checked_at)
     _write_github_output(True)
     logger.info("Completed %s check with %d analyzed positions.", check_type, len(analyses))
     return 0
@@ -87,17 +90,23 @@ def _already_completed_today(payload: dict, check_type: str, checked_at: datetim
     return last_runs.get(check_type) == checked_at.date().isoformat()
 
 
-def _send_notifications(check_type: str, analyses: list, checked_at: datetime) -> None:
-    if check_type in {"morning", "tactical"}:
-        for item in analyses:
-            if item.wow_event or item.recommendation.urgent:
-                send_telegram_message(build_alert_message(item, checked_at))
+def _send_notifications(analyses: list, opportunities: list, forum_signals: list, expert_signals: list, checked_at: datetime) -> None:
+    message = build_signal_digest(analyses, opportunities, forum_signals, expert_signals, checked_at)
+    if message is None:
+        logger.info("No urgent sell, buy opportunity, or forum signal found; Telegram skipped.")
         return
+    send_telegram_message(message)
 
-    send_telegram_message(build_daily_summary(analyses, checked_at))
 
-
-def _write_dashboard_payload(previous_payload: dict, check_type: str, analyses: list, opportunities: list, checked_at: datetime) -> None:
+def _write_dashboard_payload(
+    previous_payload: dict,
+    check_type: str,
+    analyses: list,
+    opportunities: list,
+    forum_signals: list,
+    expert_signals: list,
+    checked_at: datetime,
+) -> None:
     last_runs = previous_payload.get("meta", {}).get("last_runs", {})
     last_runs[check_type] = checked_at.date().isoformat()
 
@@ -110,6 +119,8 @@ def _write_dashboard_payload(previous_payload: dict, check_type: str, analyses: 
         },
         "positions": _sanitize_public_positions(to_jsonable(analyses)),
         "opportunities": to_jsonable(opportunities),
+        "forum_signals": to_jsonable(forum_signals),
+        "expert_signals": to_jsonable(expert_signals),
     }
 
     PORTFOLIO_JSON.parent.mkdir(parents=True, exist_ok=True)

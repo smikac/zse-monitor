@@ -282,6 +282,101 @@ tbody tr.sellRow td:first-child {
   padding: 18px;
 }
 
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.42);
+}
+
+.modalPanel {
+  width: min(720px, 100%);
+  max-height: min(760px, 92vh);
+  overflow-y: auto;
+  border: 1px solid #d7dee7;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.24);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #e5eaf0;
+}
+
+.closeButton {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #cfd6df;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #18202a;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.modalEmpty {
+  margin: 0;
+  padding: 20px;
+  color: #526070;
+}
+
+.signalGroup {
+  padding: 18px 20px;
+  border-bottom: 1px solid #edf1f5;
+}
+
+.signalGroup h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+}
+
+.signalList {
+  display: grid;
+  gap: 10px;
+}
+
+.signalItem {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d7dee7;
+  background: #fafbfc;
+}
+
+.signalItem.success {
+  border-color: #b8e4d2;
+  background: #f0fbf6;
+}
+
+.signalItem.danger {
+  border-color: #efb5ad;
+  background: #fff2f0;
+}
+
+.signalItem strong,
+.signalItem span {
+  display: block;
+}
+
+.signalItem span {
+  margin-top: 4px;
+  color: #69727f;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.signalItem p {
+  margin: 8px 0 0;
+  color: #334051;
+}
+
 @media (max-width: 720px) {
   .dashboard {
     padding: 16px;

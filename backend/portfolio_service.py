@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from analyzer import analyze_forum_sentiment, build_recommendation, calculate_technical_analysis, infer_investment_horizon
+from analyzer import analyze_forum_board_signals, analyze_forum_sentiment, build_recommendation, calculate_technical_analysis, infer_investment_horizon
 from config import get_portfolio, get_settings
-from models import MarketOpportunity, MarketQuote, PortfolioAnalysis
-from scrapers import scrape_zse_market_data
+from models import ForumSignal, MarketOpportunity, MarketQuote, PortfolioAnalysis
+from scrapers import scrape_dionice_board_posts, scrape_expert_commentary_posts, scrape_zse_market_data
 
 
 def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
@@ -67,6 +67,16 @@ def analyze_market_opportunities(owned_tickers: set[str], limit: int = 12) -> li
         )
 
     return sorted(opportunities, key=lambda item: item.score, reverse=True)[:limit]
+
+
+def analyze_forum_signals(known_tickers: set[str]) -> list[ForumSignal]:
+    posts = scrape_dionice_board_posts()
+    return analyze_forum_board_signals(posts, known_tickers)
+
+
+def analyze_expert_signals(known_tickers: set[str]) -> list[ForumSignal]:
+    posts = scrape_expert_commentary_posts()
+    return analyze_forum_board_signals(posts, known_tickers)
 
 
 def _calculate_pnl(quantity: int, average_buy_price: float, quote: MarketQuote | None) -> tuple[float | None, float | None]:

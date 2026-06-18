@@ -9,7 +9,7 @@ import pandas as pd
 from openai import OpenAI
 
 from config import InvestmentHorizon, PortfolioPosition, get_settings
-from models import MarketQuote, Recommendation, SentimentResult, TechnicalAnalysis
+from models import ForumSignal, MarketQuote, Recommendation, SentimentResult, TechnicalAnalysis
 
 
 logger = logging.getLogger(__name__)
@@ -141,6 +141,97 @@ def infer_investment_horizon(
     if return_pct is not None and return_pct < -5 and technical.trend == "downtrend":
         return "short_term", "Gubitak uz slab trend traži disciplinu oko rizika."
     return "long_term", "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna."
+
+
+def analyze_forum_board_signals(posts: list[dict[str, str]], known_tickers: set[str]) -> list[ForumSignal]:
+    if not posts:
+        return []
+
+    settings = get_settings()
+    if settings.openai_api_key:
+        ai_signals = _analyze_forum_board_with_ai(posts, known_tickers)
+        if ai_signals:
+            return ai_signals
+
+    return _analyze_forum_board_with_keywords(posts, known_tickers)
+
+
+def _analyze_forum_board_with_ai(posts: list[dict[str, str]], known_tickers: set[str]) -> list[ForumSignal]:
+    client = OpenAI(api_key=get_settings().openai_api_key)
+    payload = "\n".join(
+        f"- URL: {post['url']}\n  TEKST: {post['text'][:700]}"
+        for post in posts[:25]
+    )
+    prompt = (
+        "Analiziraj najnovije forum postove o dionicama na ZSE. "
+        "Vrati samo signale koji su bitni za kupnju, prodaju ili pojačano praćenje danas. "
+        "Ignoriraj šum, općenite rasprave i poruke bez jasnog investicijskog značaja. "
+        "Vrati strogi JSON objekt oblika: "
+        '{"signals":[{"ticker":"HT","action":"KUPI|PRODAJ|PRATI","summary":"jedna rečenica na hrvatskom","source_url":"...","confidence":0.0}]}.\n'
+        f"Poznati tickeri: {', '.join(sorted(known_tickers))}\n\nPostovi:\n{payload}"
+    )
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Ti si konzervativni analitičar foruma. Odgovaraš samo valjanim JSON-om."},
+                {"role": "user", "content": prompt},
+            ],
+            response_format={"type": "json_object"},
+            temperature=0.0,
+        )
+        parsed = json.loads(response.choices[0].message.content or "{}")
+        signals = []
+        for item in parsed.get("signals", [])[:8]:
+            ticker = str(item.get("ticker", "")).upper().strip()
+            action = str(item.get("action", "PRATI")).upper().strip()
+            if ticker not in known_tickers or action not in {"KUPI", "PRODAJ", "PRATI"}:
+                continue
+            confidence = float(item.get("confidence", 0.5))
+            if confidence < 0.55:
+                continue
+            signals.append(
+                ForumSignal(
+                    ticker=ticker,
+                    action=action,
+                    summary=str(item.get("summary", "")).strip()[:240],
+                    source_url=str(item.get("source_url", "")).strip(),
+                    confidence=confidence,
+                )
+            )
+        return signals
+    except Exception as exc:
+        logger.warning("AI forum board signal analysis failed: %s", exc)
+        return []
+
+
+def _analyze_forum_board_with_keywords(posts: list[dict[str, str]], known_tickers: set[str]) -> list[ForumSignal]:
+    buy_words = ("kupnja", "kupiti", "dokup", "akumul", "pozitiv", "rast", "target", "proboj", "dividenda")
+    sell_words = ("prodaja", "prodati", "izlaz", "pad", "panika", "loše", "gubitak", "oprez", "prevara")
+    signals: list[ForumSignal] = []
+
+    for post in posts:
+        text_lower = post["text"].lower()
+        mentioned = [ticker for ticker in known_tickers if ticker.lower() in text_lower]
+        if not mentioned:
+            continue
+        buy_score = sum(1 for word in buy_words if word in text_lower)
+        sell_score = sum(1 for word in sell_words if word in text_lower)
+        if max(buy_score, sell_score) == 0:
+            continue
+        action = "KUPI" if buy_score > sell_score else "PRODAJ" if sell_score > buy_score else "PRATI"
+        confidence = min(0.55 + abs(buy_score - sell_score) * 0.12, 0.9)
+        for ticker in mentioned[:2]:
+            signals.append(
+                ForumSignal(
+                    ticker=ticker,
+                    action=action,
+                    summary=post["text"][:220],
+                    source_url=post["url"],
+                    confidence=confidence,
+                )
+            )
+    return signals[:8]
 
 
 def _simulate_price_history(last_price: float, change_pct: float) -> list[float]:
