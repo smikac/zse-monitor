@@ -1,9 +1,331 @@
 {
   "meta": {
-    "generated_at": null,
-    "generated_at_utc": null,
-    "check_type": "initial",
-    "last_runs": {}
+    "generated_at": "2026-06-18T10:48:35.815855+02:00",
+    "generated_at_utc": "2026-06-18T08:52:19.530843+00:00",
+    "check_type": "summary",
+    "last_runs": {
+      "summary": "2026-06-18"
+    }
   },
-  "positions": []
+  "positions": [
+    {
+      "ticker": "CTKS",
+      "quantity": null,
+      "average_buy_price": null,
+      "target_price": null,
+      "stop_loss": null,
+      "investment_horizon": "short_term",
+      "horizon_reason": "Vrlo visok prinos sugerira taktičko upravljanje profitom.",
+      "quote": null,
+      "technical": {
+        "rsi": 50.0,
+        "ma50": 0.0,
+        "trend": "sideways",
+        "status": "Nema tržišnih podataka"
+      },
+      "sentiment": {
+        "sentiment": "neutral",
+        "summary": "Nema relevantnih današnjih komentara na forumu."
+      },
+      "recommendation": {
+        "action": "ZADRŽI",
+        "reason": "Nedostaje aktualna tržišna cijena.",
+        "urgent": false
+      },
+      "pnl_eur": null,
+      "pnl_pct": null,
+      "wow_event": false,
+      "checked_at": "2026-06-18T10:48:35.815855+02:00"
+    },
+    {
+      "ticker": "RIVP",
+      "quantity": null,
+      "average_buy_price": null,
+      "target_price": null,
+      "stop_loss": null,
+      "investment_horizon": "short_term",
+      "horizon_reason": "Vrlo visok prinos sugerira taktičko upravljanje profitom.",
+      "quote": null,
+      "technical": {
+        "rsi": 50.0,
+        "ma50": 0.0,
+        "trend": "sideways",
+        "status": "Nema tržišnih podataka"
+      },
+      "sentiment": {
+        "sentiment": "neutral",
+        "summary": "Nema relevantnih današnjih komentara na forumu."
+      },
+      "recommendation": {
+        "action": "ZADRŽI",
+        "reason": "Nedostaje aktualna tržišna cijena.",
+        "urgent": false
+      },
+      "pnl_eur": null,
+      "pnl_pct": null,
+      "wow_event": false,
+      "checked_at": "2026-06-18T10:48:35.815855+02:00"
+    },
+    {
+      "ticker": "KOEI",
+      "quantity": null,
+      "average_buy_price": null,
+      "target_price": null,
+      "stop_loss": null,
+      "investment_horizon": "short_term",
+      "horizon_reason": "Vrlo visok prinos sugerira taktičko upravljanje profitom.",
+      "quote": null,
+      "technical": {
+        "rsi": 50.0,
+        "ma50": 0.0,
+        "trend": "sideways",
+        "status": "Nema tržišnih podataka"
+      },
+      "sentiment": {
+        "sentiment": "neutral",
+        "summary": "Nema relevantnih današnjih komentara na forumu."
+      },
+      "recommendation": {
+        "action": "ZADRŽI",
+        "reason": "Nedostaje aktualna tržišna cijena.",
+        "urgent": false
+      },
+      "pnl_eur": null,
+      "pnl_pct": null,
+      "wow_event": false,
+      "checked_at": "2026-06-18T10:48:35.815855+02:00"
+    },
+    {
+      "ticker": "DLKV",
+      "quantity": null,
+      "average_buy_price": null,
+      "target_price": null,
+      "stop_loss": null,
+      "investment_horizon": "long_term",
+      "horizon_reason": "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna.",
+      "quote": null,
+      "technical": {
+        "rsi": 50.0,
+        "ma50": 0.0,
+        "trend": "sideways",
+        "status": "Nema tržišnih podataka"
+      },
+      "sentiment": {
+        "sentiment": "neutral",
+        "summary": "Nema relevantnih današnjih komentara na forumu."
+      },
+      "recommendation": {
+        "action": "ZADRŽI",
+        "reason": "Nedostaje aktualna tržišna cijena.",
+        "urgent": false
+      },
+      "pnl_eur": null,
+      "pnl_pct": null,
+      "wow_event": false,
+      "checked_at": "2026-06-18T10:48:35.815855+02:00"
+    },
+    {
+      "ticker": "HT",
+      "quantity": null,
+      "average_buy_price": null,
+      "target_price": null,
+      "stop_loss": null,
+      "investment_horizon": "long_term",
+      "horizon_reason": "Veći udio u portfelju i miran sentiment podržavaju dugoročno držanje.",
+      "quote": null,
+      "technical": {
+        "rsi": 50.0,
+        "ma50": 0.0,
+        "trend": "sideways",
+        "status": "Nema tržišnih podataka"
+      },
+      "sentiment": {
+        "sentiment": "neutral",
+        "summary": "Nema relevantnih današnjih komentara na forumu."
+      },
+      "recommendation": {
+        "action": "ZADRŽI",
+        "reason": "Nedostaje aktualna tržišna cijena.",
+        "urgent": false
+      },
+      "pnl_eur": null,
+      "pnl_pct": null,
+      "wow_event": false,
+      "checked_at": "2026-06-18T10:48:35.815855+02:00"
+    },
+    {
+      "ticker": "JDRN",
+      "quantity": null,
+      "average_buy_price": null,
+      "target_price": null,
+      "stop_loss": null,
+      "investment_horizon": "long_term",
+      "horizon_reason": "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna.",
+      "quote": null,
+      "technical": {
+        "rsi": 50.0,
+        "ma50": 0.0,
+        "trend": "sideways",
+        "status": "Nema tržišnih podataka"
+      },
+      "sentiment": {
+        "sentiment": "neutral",
+        "summary": "Nema relevantnih današnjih komentara na forumu."
+      },
+      "recommendation": {
+        "action": "ZADRŽI",
+        "reason": "Nedostaje aktualna tržišna cijena.",
+        "urgent": false
+      },
+      "pnl_eur": null,
+      "pnl_pct": null,
+      "wow_event": false,
+      "checked_at": "2026-06-18T10:48:35.815855+02:00"
+    },
+    {
+      "ticker": "HPB",
+      "quantity": null,
+      "average_buy_price": null,
+      "target_price": null,
+      "stop_loss": null,
+      "investment_horizon": "long_term",
+      "horizon_reason": "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna.",
+      "quote": null,
+      "technical": {
+        "rsi": 50.0,
+        "ma50": 0.0,
+        "trend": "sideways",
+        "status": "Nema tržišnih podataka"
+      },
+      "sentiment": {
+        "sentiment": "neutral",
+        "summary": "Nema relevantnih današnjih komentara na forumu."
+      },
+      "recommendation": {
+        "action": "ZADRŽI",
+        "reason": "Nedostaje aktualna tržišna cijena.",
+        "urgent": false
+      },
+      "pnl_eur": null,
+      "pnl_pct": null,
+      "wow_event": false,
+      "checked_at": "2026-06-18T10:48:35.815855+02:00"
+    },
+    {
+      "ticker": "AUHR",
+      "quantity": null,
+      "average_buy_price": null,
+      "target_price": null,
+      "stop_loss": null,
+      "investment_horizon": "long_term",
+      "horizon_reason": "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna.",
+      "quote": null,
+      "technical": {
+        "rsi": 50.0,
+        "ma50": 0.0,
+        "trend": "sideways",
+        "status": "Nema tržišnih podataka"
+      },
+      "sentiment": {
+        "sentiment": "neutral",
+        "summary": "Nema relevantnih današnjih komentara na forumu."
+      },
+      "recommendation": {
+        "action": "ZADRŽI",
+        "reason": "Nedostaje aktualna tržišna cijena.",
+        "urgent": false
+      },
+      "pnl_eur": null,
+      "pnl_pct": null,
+      "wow_event": false,
+      "checked_at": "2026-06-18T10:48:35.815855+02:00"
+    },
+    {
+      "ticker": "ERNT",
+      "quantity": null,
+      "average_buy_price": null,
+      "target_price": null,
+      "stop_loss": null,
+      "investment_horizon": "long_term",
+      "horizon_reason": "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna.",
+      "quote": null,
+      "technical": {
+        "rsi": 50.0,
+        "ma50": 0.0,
+        "trend": "sideways",
+        "status": "Nema tržišnih podataka"
+      },
+      "sentiment": {
+        "sentiment": "neutral",
+        "summary": "Nema relevantnih današnjih komentara na forumu."
+      },
+      "recommendation": {
+        "action": "ZADRŽI",
+        "reason": "Nedostaje aktualna tržišna cijena.",
+        "urgent": false
+      },
+      "pnl_eur": null,
+      "pnl_pct": null,
+      "wow_event": false,
+      "checked_at": "2026-06-18T10:48:35.815855+02:00"
+    },
+    {
+      "ticker": "ZABA",
+      "quantity": null,
+      "average_buy_price": null,
+      "target_price": null,
+      "stop_loss": null,
+      "investment_horizon": "long_term",
+      "horizon_reason": "Veći udio u portfelju i miran sentiment podržavaju dugoročno držanje.",
+      "quote": null,
+      "technical": {
+        "rsi": 50.0,
+        "ma50": 0.0,
+        "trend": "sideways",
+        "status": "Nema tržišnih podataka"
+      },
+      "sentiment": {
+        "sentiment": "neutral",
+        "summary": "Nema relevantnih današnjih komentara na forumu."
+      },
+      "recommendation": {
+        "action": "ZADRŽI",
+        "reason": "Nedostaje aktualna tržišna cijena.",
+        "urgent": false
+      },
+      "pnl_eur": null,
+      "pnl_pct": null,
+      "wow_event": false,
+      "checked_at": "2026-06-18T10:48:35.815855+02:00"
+    },
+    {
+      "ticker": "ZITO",
+      "quantity": null,
+      "average_buy_price": null,
+      "target_price": null,
+      "stop_loss": null,
+      "investment_horizon": "long_term",
+      "horizon_reason": "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna.",
+      "quote": null,
+      "technical": {
+        "rsi": 50.0,
+        "ma50": 0.0,
+        "trend": "sideways",
+        "status": "Nema tržišnih podataka"
+      },
+      "sentiment": {
+        "sentiment": "neutral",
+        "summary": "Nema relevantnih današnjih komentara na forumu."
+      },
+      "recommendation": {
+        "action": "ZADRŽI",
+        "reason": "Nedostaje aktualna tržišna cijena.",
+        "urgent": false
+      },
+      "pnl_eur": null,
+      "pnl_pct": null,
+      "wow_event": false,
+      "checked_at": "2026-06-18T10:48:35.815855+02:00"
+    }
+  ]
 }
