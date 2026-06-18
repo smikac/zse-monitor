@@ -75,6 +75,11 @@ def analyze_market_opportunities(owned_tickers: set[str], limit: int = 12) -> li
         has_dividend = ticker in dividend_tickers or dividend is not None
         dividend_yield_pct = _dividend_yield_pct(dividend, quote, None)
         annual_forecast = build_annual_forecast(quote, technical, None, has_dividend, dividend_info=dividend)
+        score = _opportunity_value_score(score, action, dividend_yield_pct, annual_forecast.direction)
+        if action == "PRATI" and score >= 4.0 and technical.trend != "downtrend":
+            action = "KUPI"
+            reason = "Kombinacija relativne isplativosti, dividende/prognoze i tržišne likvidnosti je pozitivna."
+        reason = _append_value_context(reason, dividend_yield_pct, annual_forecast.direction)
         opportunities.append(
             MarketOpportunity(
                 ticker=ticker,
@@ -94,7 +99,7 @@ def analyze_market_opportunities(owned_tickers: set[str], limit: int = 12) -> li
             )
         )
 
-    return sorted(opportunities, key=lambda item: item.score, reverse=True)[:limit]
+    return sorted(opportunities, key=_opportunity_sort_key, reverse=True)[:limit]
 
 
 def analyze_forum_signals(known_tickers: set[str]) -> list[ForumSignal]:
@@ -144,6 +149,38 @@ def _broker_snapshot_quote(position: dict) -> MarketQuote | None:
         turnover_eur=0.0,
         is_traded=False,
     )
+
+
+def _opportunity_value_score(
+    base_score: float,
+    action: str,
+    dividend_yield_pct: float | None,
+    forecast_direction: str,
+) -> float:
+    action_bonus = 4.0 if action == "KUPI" else -4.0 if action == "IZBJEGNI" else 0.0
+    forecast_bonus = 1.5 if forecast_direction == "RAST" else -1.5 if forecast_direction == "PAD" else 0.0
+    dividend_bonus = min((dividend_yield_pct or 0.0) * 0.35, 2.0)
+    return round(base_score + action_bonus + forecast_bonus + dividend_bonus, 3)
+
+
+def _opportunity_sort_key(item: MarketOpportunity) -> tuple[int, float, int, float, float]:
+    action_rank = {"KUPI": 3, "PRATI": 2, "IZBJEGNI": 1}.get(item.action, 0)
+    forecast_rank = {"RAST": 2, "NEUTRALNO": 1, "PAD": 0}.get(item.annual_forecast.direction, 1)
+    dividend_yield = item.dividend_yield_pct or 0.0
+    return action_rank, item.score, forecast_rank, dividend_yield, item.quote.turnover_eur
+
+
+def _append_value_context(reason: str, dividend_yield_pct: float | None, forecast_direction: str) -> str:
+    details: list[str] = []
+    if dividend_yield_pct is not None and dividend_yield_pct >= 2.0:
+        details.append(f"dividendni prinos oko {dividend_yield_pct:.2f}%")
+    if forecast_direction == "RAST":
+        details.append("12-mjesečna prognoza naginje rastu")
+    elif forecast_direction == "PAD":
+        details.append("12-mjesečna prognoza upozorava na pad")
+    if not details:
+        return reason
+    return f"{reason} Dodatno: {', '.join(details)}."
 
 
 def _score_market_opportunity(quote: MarketQuote, technical) -> tuple[str, str, float]:

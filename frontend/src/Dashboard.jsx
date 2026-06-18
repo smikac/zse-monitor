@@ -102,7 +102,7 @@ export default function Dashboard() {
       <section className="tableShell secondaryShell">
         <div className="sectionHeader">
           <h2>Dnevni ZSE kandidati</h2>
-          <span>{opportunities.length} signali</span>
+          <span>{opportunities.length} signali · najbolje kupnje prvo</span>
         </div>
         <OpportunityTable opportunities={opportunities} loading={loading} onSelect={setForecastItem} />
       </section>
