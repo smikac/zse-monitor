@@ -10,7 +10,7 @@ from zoneinfo import ZoneInfo
 
 from json_utils import to_jsonable
 from notifier import build_alert_message, build_daily_summary, send_telegram_message
-from portfolio_service import analyze_portfolio
+from portfolio_service import analyze_market_opportunities, analyze_portfolio
 
 
 ZAGREB_TZ = ZoneInfo("Europe/Zagreb")
@@ -46,8 +46,10 @@ def main() -> int:
         return 0
 
     analyses = analyze_portfolio(checked_at)
+    owned_tickers = {item.ticker for item in analyses}
+    opportunities = analyze_market_opportunities(owned_tickers)
     _send_notifications(check_type, analyses, checked_at)
-    _write_dashboard_payload(previous_payload, check_type, analyses, checked_at)
+    _write_dashboard_payload(previous_payload, check_type, analyses, opportunities, checked_at)
     _write_github_output(True)
     logger.info("Completed %s check with %d analyzed positions.", check_type, len(analyses))
     return 0
@@ -95,7 +97,7 @@ def _send_notifications(check_type: str, analyses: list, checked_at: datetime) -
     send_telegram_message(build_daily_summary(analyses, checked_at))
 
 
-def _write_dashboard_payload(previous_payload: dict, check_type: str, analyses: list, checked_at: datetime) -> None:
+def _write_dashboard_payload(previous_payload: dict, check_type: str, analyses: list, opportunities: list, checked_at: datetime) -> None:
     last_runs = previous_payload.get("meta", {}).get("last_runs", {})
     last_runs[check_type] = checked_at.date().isoformat()
 
@@ -107,6 +109,7 @@ def _write_dashboard_payload(previous_payload: dict, check_type: str, analyses: 
             "last_runs": last_runs,
         },
         "positions": _sanitize_public_positions(to_jsonable(analyses)),
+        "opportunities": to_jsonable(opportunities),
     }
 
     PORTFOLIO_JSON.parent.mkdir(parents=True, exist_ok=True)

@@ -4,6 +4,7 @@ import { fetchPortfolio } from "./api.js";
 
 export default function Dashboard() {
   const [positions, setPositions] = useState([]);
+  const [opportunities, setOpportunities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -12,7 +13,8 @@ export default function Dashboard() {
     setError("");
     try {
       const data = await fetchPortfolio();
-      setPositions(data);
+      setPositions(data.positions);
+      setOpportunities(data.opportunities);
     } catch (err) {
       setError("Nije moguće dohvatiti portfelj. Prikaz provjeri nakon dostupnosti API-ja.");
     } finally {
@@ -67,6 +69,14 @@ export default function Dashboard() {
         </div>
         <PortfolioTable positions={positions} loading={loading} />
       </section>
+
+      <section className="tableShell secondaryShell">
+        <div className="sectionHeader">
+          <h2>Dnevni ZSE kandidati</h2>
+          <span>{opportunities.length} signali</span>
+        </div>
+        <OpportunityTable opportunities={opportunities} loading={loading} />
+      </section>
     </main>
   );
 }
@@ -115,7 +125,7 @@ function PortfolioTable({ positions, loading }) {
         </thead>
         <tbody>
           {positions.map((item) => (
-            <tr key={item.ticker}>
+            <tr key={item.ticker} className={rowSignalClass(item.recommendation?.action)}>
               <td>
                 <div className="tickerCell">
                   <strong>{item.ticker}</strong>
@@ -140,7 +150,53 @@ function PortfolioTable({ positions, loading }) {
               <td>{formatDateTime(item.checked_at)}</td>
               <td>
                 <Badge tone={recommendationTone(item.recommendation?.action)}>{item.recommendation?.action ?? "N/A"}</Badge>
+                <span className="subtle">{item.horizon_reason}</span>
               </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function OpportunityTable({ opportunities, loading }) {
+  if (loading && opportunities.length === 0) {
+    return <div className="tableState">Učitavanje ZSE kandidata...</div>;
+  }
+
+  if (opportunities.length === 0) {
+    return <div className="tableState">Nema dovoljno jakih ZSE signala izvan portfelja.</div>;
+  }
+
+  return (
+    <div className="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Cijena</th>
+            <th>Promet</th>
+            <th>Tehnika</th>
+            <th>Signal</th>
+            <th>Razlog</th>
+          </tr>
+        </thead>
+        <tbody>
+          {opportunities.map((item) => (
+            <tr key={item.ticker} className={opportunityRowClass(item.action)}>
+              <td><strong>{item.ticker}</strong></td>
+              <td>
+                <strong>{formatCurrency(item.quote?.last_price)}</strong>
+                <span className={item.quote?.change_pct >= 0 ? "positive inline" : "negative inline"}>
+                  {item.quote?.change_pct >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+                  {formatPercent(item.quote?.change_pct)}
+                </span>
+              </td>
+              <td>{formatCurrency(item.quote?.turnover_eur)}</td>
+              <td><Badge tone={technicalTone(item.technical?.trend)}>{item.technical?.status ?? "N/A"}</Badge></td>
+              <td><Badge tone={opportunityTone(item.action)}>{item.action}</Badge></td>
+              <td className="summaryCell">{item.reason}</td>
             </tr>
           ))}
         </tbody>
@@ -157,6 +213,24 @@ function recommendationTone(action = "") {
   if (action.includes("PRODAJ")) return "danger";
   if (action.includes("KUPI")) return "success";
   return "neutral";
+}
+
+function opportunityTone(action = "") {
+  if (action === "KUPI") return "success";
+  if (action === "IZBJEGNI") return "danger";
+  return "neutral";
+}
+
+function rowSignalClass(action = "") {
+  if (action.includes("PRODAJ")) return "sellRow";
+  if (action.includes("KUPI")) return "buyRow";
+  return "";
+}
+
+function opportunityRowClass(action = "") {
+  if (action === "KUPI") return "buyRow";
+  if (action === "IZBJEGNI") return "sellRow";
+  return "";
 }
 
 function technicalTone(trend = "") {

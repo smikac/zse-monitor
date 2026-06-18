@@ -39,7 +39,7 @@ def calculate_technical_analysis(quote: MarketQuote | None, historical_prices: l
 
 def analyze_forum_sentiment(ticker: str, comments: list[str]) -> SentimentResult:
     if not comments:
-        return SentimentResult(sentiment="neutral", summary="Nema relevantnih današnjih komentara na forumu.")
+        return SentimentResult(sentiment="neutral", summary="Sentiment nije korišten; analiza se temelji na ZSE tržišnim podacima.")
 
     settings = get_settings()
     if not settings.openai_api_key:

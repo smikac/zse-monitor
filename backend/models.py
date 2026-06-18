@@ -17,6 +17,11 @@ class MarketQuote:
     last_price: float
     change_pct: float
     turnover_eur: float
+    volume: float = 0.0
+    vwap_price: float = 0.0
+    market_segment: str = ""
+    isin: str = ""
+    is_traded: bool = False
 
 
 @dataclass(frozen=True)
@@ -57,3 +62,13 @@ class PortfolioAnalysis:
     pnl_pct: float | None
     wow_event: bool
     checked_at: datetime
+
+
+@dataclass(frozen=True)
+class MarketOpportunity:
+    ticker: str
+    quote: MarketQuote
+    technical: TechnicalAnalysis
+    action: Literal["KUPI", "PRATI", "IZBJEGNI"]
+    reason: str
+    score: float

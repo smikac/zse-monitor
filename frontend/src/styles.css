@@ -153,6 +153,10 @@ h2 {
   box-shadow: 0 14px 34px rgba(37, 49, 64, 0.07);
 }
 
+.secondaryShell {
+  margin-top: 22px;
+}
+
 .sectionHeader {
   justify-content: space-between;
   padding: 18px 20px;
@@ -193,6 +197,22 @@ th {
 
 td {
   font-size: 14px;
+}
+
+tbody tr.buyRow {
+  background: #f0fbf6;
+}
+
+tbody tr.sellRow {
+  background: #fff2f0;
+}
+
+tbody tr.buyRow td:first-child {
+  border-left: 4px solid #17a66a;
+}
+
+tbody tr.sellRow td:first-child {
+  border-left: 4px solid #d64032;
 }
 
 .tickerCell {

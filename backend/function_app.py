@@ -10,7 +10,7 @@ from zoneinfo import ZoneInfo
 import azure.functions as func
 
 from notifier import build_alert_message, build_daily_summary, send_telegram_message
-from portfolio_service import analyze_portfolio
+from portfolio_service import analyze_market_opportunities, analyze_portfolio
 
 
 app = func.FunctionApp()
@@ -35,8 +35,15 @@ def get_portfolio(req: func.HttpRequest) -> func.HttpResponse:
 
     checked_at = datetime.now(timezone.utc)
     analyses = analyze_portfolio(checked_at)
+    opportunities = analyze_market_opportunities({item.ticker for item in analyses})
     return func.HttpResponse(
-        json.dumps([_to_jsonable(item) for item in analyses], ensure_ascii=False),
+        json.dumps(
+            {
+                "positions": [_to_jsonable(item) for item in analyses],
+                "opportunities": [_to_jsonable(item) for item in opportunities],
+            },
+            ensure_ascii=False,
+        ),
         mimetype="application/json",
         status_code=200,
         headers=_cors_headers(),

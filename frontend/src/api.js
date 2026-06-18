@@ -7,12 +7,18 @@ export async function fetchPortfolio() {
       return [];
     }
     const payload = await response.json();
-    return payload.positions ?? [];
+    return {
+      positions: payload.positions ?? [],
+      opportunities: payload.opportunities ?? [],
+    };
   }
 
   const response = await fetch(`${API_BASE_URL.replace(/\/$/, "")}/api/portfolio`);
   if (!response.ok) {
     throw new Error(`Portfolio API returned ${response.status}`);
   }
-  return response.json();
+  const payload = await response.json();
+  return Array.isArray(payload)
+    ? { positions: payload, opportunities: [] }
+    : { positions: payload.positions ?? [], opportunities: payload.opportunities ?? [] };
 }
