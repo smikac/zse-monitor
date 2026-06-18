@@ -60,10 +60,11 @@ Optional `EXPERT_POSTS_JSON` secret:
 
 Optional `EXPERT_FEED_URLS` repository variable accepts comma-separated RSS/feed URLs. Avoid storing Facebook login cookies or passwords in GitHub.
 
-Optional dividend setup:
+Dividend data is read automatically from the official ZSE dividend feed:
 
-- Set repository variable `DIVIDEND_TICKERS` to a comma-separated list, for example `HT,ERNT,KOEI`.
-- Or add `"has_dividend": true` and optionally `"dividend_yield_pct": 3.2` to a position in `PORTFOLIO_JSON`.
+- Source: `https://zse.hr/json/XZAG-WebDividendData.json`.
+- Optional fallback: set repository variable `DIVIDEND_TICKERS` to a comma-separated list if ZSE data is temporarily unavailable.
+- You can still add `"has_dividend": true` and optionally `"dividend_yield_pct": 3.2` to a position in `PORTFOLIO_JSON`.
 
 ## Backend
 

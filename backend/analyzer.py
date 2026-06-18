@@ -9,7 +9,7 @@ import pandas as pd
 from openai import OpenAI
 
 from config import InvestmentHorizon, PortfolioPosition, get_settings
-from models import AnnualForecast, ForumSignal, MarketQuote, Recommendation, SentimentResult, TechnicalAnalysis
+from models import AnnualForecast, DividendInfo, ForumSignal, MarketQuote, Recommendation, SentimentResult, TechnicalAnalysis
 
 
 logger = logging.getLogger(__name__)
@@ -149,6 +149,7 @@ def build_annual_forecast(
     recommendation: Recommendation | None,
     has_dividend: bool,
     sentiment: SentimentResult | None = None,
+    dividend_info: DividendInfo | None = None,
 ) -> AnnualForecast:
     drivers: list[str] = []
     score = 0.0
@@ -186,7 +187,10 @@ def build_annual_forecast(
 
     if has_dividend:
         score += 0.5
-        drivers.append("dionica ima označenu dividendnu komponentu")
+        if dividend_info:
+            drivers.append(f"ZSE navodi dividendu {dividend_info.amount_per_share:.2f} {dividend_info.currency} po dionici")
+        else:
+            drivers.append("dionica ima označenu dividendnu komponentu")
 
     if sentiment and sentiment.sentiment == "bullish":
         score += 0.5

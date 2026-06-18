@@ -25,6 +25,17 @@ class MarketQuote:
 
 
 @dataclass(frozen=True)
+class DividendInfo:
+    ticker: str
+    amount_per_share: float
+    currency: str
+    ex_date: str
+    record_date: str
+    payment_date: str
+    status: str
+
+
+@dataclass(frozen=True)
 class TechnicalAnalysis:
     rsi: float
     ma50: float
@@ -67,6 +78,11 @@ class PortfolioAnalysis:
     sentiment: SentimentResult
     recommendation: Recommendation
     has_dividend: bool
+    dividend_per_share: float | None
+    dividend_currency: str | None
+    dividend_ex_date: str | None
+    dividend_payment_date: str | None
+    dividend_status: str | None
     dividend_yield_pct: float | None
     annual_forecast: AnnualForecast
     pnl_eur: float | None
@@ -84,6 +100,11 @@ class MarketOpportunity:
     reason: str
     score: float
     has_dividend: bool
+    dividend_per_share: float | None
+    dividend_currency: str | None
+    dividend_ex_date: str | None
+    dividend_payment_date: str | None
+    dividend_status: str | None
     dividend_yield_pct: float | None
     annual_forecast: AnnualForecast
 

@@ -4,14 +4,15 @@ from datetime import datetime
 
 from analyzer import analyze_forum_board_signals, analyze_forum_sentiment, build_annual_forecast, build_recommendation, calculate_technical_analysis, infer_investment_horizon
 from config import get_dividend_tickers, get_portfolio, get_settings
-from models import ForumSignal, MarketOpportunity, MarketQuote, PortfolioAnalysis
-from scrapers import scrape_dionice_board_posts, scrape_expert_commentary_posts, scrape_zse_market_data
+from models import DividendInfo, ForumSignal, MarketOpportunity, MarketQuote, PortfolioAnalysis
+from scrapers import scrape_dionice_board_posts, scrape_expert_commentary_posts, scrape_zse_dividends, scrape_zse_market_data
 
 
 def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
     quotes = scrape_zse_market_data()
     analyses: list[PortfolioAnalysis] = []
     dividend_tickers = get_dividend_tickers()
+    dividends = scrape_zse_dividends()
 
     for position in get_portfolio():
         ticker = position["ticker"]
@@ -23,9 +24,10 @@ def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
         decision_position = dict(position)
         decision_position["investment_horizon"] = investment_horizon
         recommendation = build_recommendation(decision_position, quote, technical, sentiment)
-        has_dividend = bool(position.get("has_dividend", ticker in dividend_tickers))
-        dividend_yield_pct = position.get("dividend_yield_pct")
-        annual_forecast = build_annual_forecast(quote, technical, recommendation, has_dividend, sentiment)
+        dividend = dividends.get(ticker)
+        has_dividend = bool(position.get("has_dividend", ticker in dividend_tickers or dividend is not None))
+        dividend_yield_pct = _dividend_yield_pct(dividend, quote, position.get("dividend_yield_pct"))
+        annual_forecast = build_annual_forecast(quote, technical, recommendation, has_dividend, sentiment, dividend)
         analyses.append(
             PortfolioAnalysis(
                 ticker=ticker,
@@ -40,6 +42,11 @@ def analyze_portfolio(checked_at: datetime) -> list[PortfolioAnalysis]:
                 sentiment=sentiment,
                 recommendation=recommendation,
                 has_dividend=has_dividend,
+                dividend_per_share=dividend.amount_per_share if dividend else None,
+                dividend_currency=dividend.currency if dividend else None,
+                dividend_ex_date=dividend.ex_date if dividend else None,
+                dividend_payment_date=dividend.payment_date if dividend else None,
+                dividend_status=dividend.status if dividend else None,
                 dividend_yield_pct=dividend_yield_pct,
                 annual_forecast=annual_forecast,
                 pnl_eur=pnl_eur,
@@ -56,6 +63,7 @@ def analyze_market_opportunities(owned_tickers: set[str], limit: int = 12) -> li
     quotes = scrape_zse_market_data(only_traded=True)
     opportunities: list[MarketOpportunity] = []
     dividend_tickers = get_dividend_tickers()
+    dividends = scrape_zse_dividends()
 
     for ticker, quote in quotes.items():
         if ticker in owned_tickers or quote.turnover_eur < 2_000:
@@ -63,8 +71,10 @@ def analyze_market_opportunities(owned_tickers: set[str], limit: int = 12) -> li
 
         technical = calculate_technical_analysis(quote)
         action, reason, score = _score_market_opportunity(quote, technical)
-        has_dividend = ticker in dividend_tickers
-        annual_forecast = build_annual_forecast(quote, technical, None, has_dividend)
+        dividend = dividends.get(ticker)
+        has_dividend = ticker in dividend_tickers or dividend is not None
+        dividend_yield_pct = _dividend_yield_pct(dividend, quote, None)
+        annual_forecast = build_annual_forecast(quote, technical, None, has_dividend, dividend_info=dividend)
         opportunities.append(
             MarketOpportunity(
                 ticker=ticker,
@@ -74,7 +84,12 @@ def analyze_market_opportunities(owned_tickers: set[str], limit: int = 12) -> li
                 reason=reason,
                 score=score,
                 has_dividend=has_dividend,
-                dividend_yield_pct=None,
+                dividend_per_share=dividend.amount_per_share if dividend else None,
+                dividend_currency=dividend.currency if dividend else None,
+                dividend_ex_date=dividend.ex_date if dividend else None,
+                dividend_payment_date=dividend.payment_date if dividend else None,
+                dividend_status=dividend.status if dividend else None,
+                dividend_yield_pct=dividend_yield_pct,
                 annual_forecast=annual_forecast,
             )
         )
@@ -108,6 +123,14 @@ def _is_wow_event(quote: MarketQuote | None) -> bool:
         quote.turnover_eur >= settings.wow_turnover_threshold_eur
         or abs(quote.change_pct) >= settings.wow_price_change_threshold_pct
     )
+
+
+def _dividend_yield_pct(dividend: DividendInfo | None, quote: MarketQuote | None, fallback: float | None) -> float | None:
+    if fallback is not None:
+        return float(fallback)
+    if dividend is None or quote is None or quote.last_price <= 0:
+        return None
+    return round((dividend.amount_per_share / quote.last_price) * 100, 2)
 
 
 def _broker_snapshot_quote(position: dict) -> MarketQuote | None:

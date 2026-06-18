@@ -9,10 +9,11 @@ import requests
 from bs4 import BeautifulSoup
 
 from config import get_expert_feed_urls, get_expert_posts, get_settings
-from models import MarketQuote
+from models import DividendInfo, MarketQuote
 
 
 ZSE_TRADING_PRICE_LIST_URL = "https://zse.hr/json/TradingPriceList"
+ZSE_DIVIDEND_DATA_URL = "https://zse.hr/json/XZAG-WebDividendData.json"
 ZSE_MARKET_SEGMENTS = "RP,RO,RR,TJDD,UT,TZIF,RGHT,DMTF,FMTF,SS,MF,MA,MX,TEST"
 DIONICE_BOARD_URL = "https://dionice.net/forum/board/2-dionice/"
 USER_AGENT = (
@@ -68,6 +69,45 @@ def scrape_zse_market_data(only_traded: bool = False) -> dict[str, MarketQuote]:
 
 def scrape_mojedionice() -> dict[str, MarketQuote]:
     return scrape_zse_market_data()
+
+
+def scrape_zse_dividends() -> dict[str, DividendInfo]:
+    settings = get_settings()
+    try:
+        response = requests.get(
+            ZSE_DIVIDEND_DATA_URL,
+            headers={**_headers(), "Referer": "https://zse.hr/hr/isplate-dividendi-202/202"},
+            timeout=settings.request_timeout_seconds,
+        )
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        logger.warning("ZSE dividend data fetch failed: %s", exc)
+        return {}
+
+    payload = response.json()
+    dividends: dict[str, DividendInfo] = {}
+    for row in payload.get("dividends", []):
+        if str(row.get("type", "")).lower() != "money":
+            continue
+
+        ticker = str(row.get("symbol", "")).upper().strip()
+        if not ticker:
+            continue
+
+        info = DividendInfo(
+            ticker=ticker,
+            amount_per_share=_field_float(row, "value"),
+            currency=str(row.get("currency", "EUR")).strip() or "EUR",
+            ex_date=str(row.get("ex_date", "")).strip(),
+            record_date=str(row.get("record_date", "")).strip(),
+            payment_date=str(row.get("payment_date", "")).strip(),
+            status=str(row.get("variants", "")).strip(),
+        )
+        current = dividends.get(ticker)
+        if current is None or _dividend_priority(info) > _dividend_priority(current):
+            dividends[ticker] = info
+
+    return dividends
 
 
 def scrape_dionice_forum(ticker: str) -> list[str]:
@@ -285,6 +325,12 @@ def _field_float(row: dict[str, Any], *keys: str) -> float:
             except ValueError:
                 continue
     return 0.0
+
+
+def _dividend_priority(info: DividendInfo) -> tuple[int, str, float]:
+    status = info.status.lower()
+    status_score = 2 if "voted" in status else 1 if "proposed" in status else 0
+    return status_score, info.payment_date, info.amount_per_share
 
 
 def _known_zse_keys() -> tuple[str, ...]:

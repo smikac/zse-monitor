@@ -67,8 +67,8 @@ export default function Dashboard() {
             <AlertTriangle size={18} />
             <span>Provjeri stanje</span>
           </button>
-          <a className="iconButton linkButton" href={WORKFLOW_URL} target="_blank" rel="noreferrer">
-            Pokreni novu provjeru
+          <a className="iconButton linkButton" href={WORKFLOW_URL} target="_blank" rel="noreferrer" title="Otvara GitHub Actions gdje ručno pokrećeš novi run. Statički GitHub Pages ne smije čuvati GitHub token u browseru.">
+            Pokreni u Actions
           </a>
         </div>
       </header>
@@ -180,7 +180,7 @@ function PortfolioTable({ positions, loading, onSelect }) {
                   {formatPercent(item.quote?.change_pct)}
                 </span>
               </td>
-              <td><DividendCheckbox checked={item.has_dividend} /></td>
+              <td><DividendCell item={item} /></td>
               <td>
                 <Badge tone={technicalTone(item.technical?.trend)}>{item.technical?.status ?? "N/A"}</Badge>
               </td>
@@ -232,7 +232,7 @@ function OpportunityTable({ opportunities, loading, onSelect }) {
                   {formatPercent(item.quote?.change_pct)}
                 </span>
               </td>
-              <td><DividendCheckbox checked={item.has_dividend} /></td>
+              <td><DividendCell item={item} /></td>
               <td>{formatCurrency(item.quote?.turnover_eur)}</td>
               <td><Badge tone={technicalTone(item.technical?.trend)}>{item.technical?.status ?? "N/A"}</Badge></td>
               <td><Badge tone={opportunityTone(item.action)}>{item.action}</Badge></td>
@@ -245,8 +245,33 @@ function OpportunityTable({ opportunities, loading, onSelect }) {
   );
 }
 
-function DividendCheckbox({ checked }) {
-  return <input className="dividendCheck" type="checkbox" checked={Boolean(checked)} readOnly aria-label="Ima dividendu" />;
+function DividendCell({ item }) {
+  if (!item.has_dividend) {
+    return (
+      <div className="dividendCell empty">
+        <input className="dividendCheck" type="checkbox" checked={false} readOnly aria-label="Nema dividendu" />
+        <span>Nema</span>
+      </div>
+    );
+  }
+
+  const amount = item.dividend_per_share
+    ? `${formatNumber(item.dividend_per_share)} ${item.dividend_currency ?? "EUR"}`
+    : "Da";
+  const details = [
+    item.dividend_yield_pct ? `${formatNumber(item.dividend_yield_pct)}%` : null,
+    item.dividend_payment_date ? `isplata ${formatDate(item.dividend_payment_date)}` : null,
+  ].filter(Boolean).join(" · ");
+
+  return (
+    <div className="dividendCell">
+      <input className="dividendCheck" type="checkbox" checked readOnly aria-label="Ima dividendu" />
+      <span>
+        <strong>{amount}</strong>
+        {details && <small>{details}</small>}
+      </span>
+    </div>
+  );
 }
 
 function ForecastModal({ item, onClose }) {
@@ -268,7 +293,7 @@ function ForecastModal({ item, onClose }) {
           <div className="forecastMetrics">
             <span>Cijena: <strong>{formatCurrency(item.quote?.last_price)}</strong></span>
             <span>Promjena: <strong>{formatPercent(item.quote?.change_pct)}</strong></span>
-            <span>Dividenda: <strong>{item.has_dividend ? "da" : "ne"}</strong></span>
+            <span>Dividenda: <strong>{formatDividendSummary(item)}</strong></span>
           </div>
           {forecast?.drivers?.length > 0 && (
             <div className="signalGroup compactGroup">
@@ -430,6 +455,20 @@ function formatPercent(value) {
   return `${value > 0 ? "+" : ""}${value.toFixed(2)}%`;
 }
 
+function formatNumber(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) return "N/A";
+  return new Intl.NumberFormat("hr-HR", { maximumFractionDigits: 2 }).format(value);
+}
+
+function formatDate(value) {
+  if (!value) return "N/A";
+  return new Intl.DateTimeFormat("hr-HR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(new Date(value));
+}
+
 function formatDateTime(value) {
   if (!value) return "N/A";
   return new Intl.DateTimeFormat("hr-HR", {
@@ -438,6 +477,13 @@ function formatDateTime(value) {
     hour: "2-digit",
     minute: "2-digit",
   }).format(new Date(value));
+}
+
+function formatDividendSummary(item) {
+  if (!item.has_dividend) return "ne";
+  if (!item.dividend_per_share) return "da";
+  const yieldText = item.dividend_yield_pct ? ` (${formatNumber(item.dividend_yield_pct)}%)` : "";
+  return `${formatNumber(item.dividend_per_share)} ${item.dividend_currency ?? "EUR"}${yieldText}`;
 }
 
 function formatPositionMeta(item) {
