@@ -1,7 +1,7 @@
 {
   "meta": {
-    "generated_at": "2026-06-18T12:36:45.660408+02:00",
-    "generated_at_utc": "2026-06-18T10:37:07.966465+00:00",
+    "generated_at": "2026-06-18T12:54:15.265871+02:00",
+    "generated_at_utc": "2026-06-18T10:54:37.459038+00:00",
     "check_type": "summary",
     "last_runs": {
       "summary": "2026-06-18"
@@ -42,10 +42,21 @@
         "reason": "Nema dovoljno jakog signala za transakciju.",
         "urgent": false
       },
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.37,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "nema današnjeg prometa"
+        ]
+      },
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-06-18T12:36:45.660408+02:00"
+      "checked_at": "2026-06-18T12:54:15.265871+02:00"
     },
     {
       "ticker": "RIVP",
@@ -81,10 +92,21 @@
         "reason": "Nema dovoljno jakog signala za transakciju.",
         "urgent": false
       },
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.4,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "promet je povišen"
+        ]
+      },
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-06-18T12:36:45.660408+02:00"
+      "checked_at": "2026-06-18T12:54:15.265871+02:00"
     },
     {
       "ticker": "KOEI",
@@ -96,20 +118,20 @@
       "horizon_reason": "Vrlo visok prinos sugerira taktičko upravljanje profitom.",
       "quote": {
         "ticker": "KOEI",
-        "last_price": 1034.0,
-        "change_pct": -2.45,
-        "turnover_eur": 319046.0,
-        "volume": 306.0,
-        "vwap_price": 1042.6339869281,
+        "last_price": 1028.0,
+        "change_pct": -3.02,
+        "turnover_eur": 357208.0,
+        "volume": 343.0,
+        "vwap_price": 1041.4227405248,
         "market_segment": "RO",
         "isin": "HRKOEIRA0009",
         "is_traded": true
       },
       "technical": {
-        "rsi": 21.95533318439479,
-        "ma50": 1063.826238,
+        "rsi": 19.535808415886606,
+        "ma50": 1064.8311720000002,
         "trend": "downtrend",
-        "status": "RSI 22.0, cijena ispod MA50"
+        "status": "RSI 19.5, cijena ispod MA50"
       },
       "sentiment": {
         "sentiment": "neutral",
@@ -120,10 +142,22 @@
         "reason": "Nema dovoljno jakog signala za transakciju.",
         "urgent": false
       },
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "PAD",
+        "confidence": 0.57,
+        "summary": "Model vidi povećan rizik pada ili slabijeg prinosa u sljedećih godinu dana.",
+        "drivers": [
+          "cijena je ispod simuliranog MA50 trenda",
+          "dnevni momentum je negativan",
+          "promet je povišen"
+        ]
+      },
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-06-18T12:36:45.660408+02:00"
+      "checked_at": "2026-06-18T12:54:15.265871+02:00"
     },
     {
       "ticker": "DLKV",
@@ -159,10 +193,21 @@
         "reason": "Dugoročni horizont ignorira kratkoročni šum.",
         "urgent": false
       },
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "RAST",
+        "confidence": 0.57,
+        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
+        "drivers": [
+          "cijena je iznad simuliranog MA50 trenda",
+          "promet je povišen"
+        ]
+      },
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-06-18T12:36:45.660408+02:00"
+      "checked_at": "2026-06-18T12:54:15.265871+02:00"
     },
     {
       "ticker": "HT",
@@ -176,9 +221,9 @@
         "ticker": "HT",
         "last_price": 41.8,
         "change_pct": 2.96,
-        "turnover_eur": 349988.0,
-        "volume": 8502.0,
-        "vwap_price": 41.165372853446,
+        "turnover_eur": 366708.0,
+        "volume": 8902.0,
+        "vwap_price": 41.193889013705,
         "market_segment": "RP",
         "isin": "HRHT00RA0005",
         "is_traded": true
@@ -198,10 +243,22 @@
         "reason": "Nema dovoljno jakog signala za transakciju.",
         "urgent": false
       },
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "RAST",
+        "confidence": 0.66,
+        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
+        "drivers": [
+          "cijena je iznad simuliranog MA50 trenda",
+          "dnevni momentum je pozitivan",
+          "promet je povišen"
+        ]
+      },
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-06-18T12:36:45.660408+02:00"
+      "checked_at": "2026-06-18T12:54:15.265871+02:00"
     },
     {
       "ticker": "JDRN",
@@ -237,10 +294,20 @@
         "reason": "Dugoročni horizont ignorira kratkoročni šum.",
         "urgent": false
       },
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.35,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan"
+        ]
+      },
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-06-18T12:36:45.660408+02:00"
+      "checked_at": "2026-06-18T12:54:15.265871+02:00"
     },
     {
       "ticker": "HPB",
@@ -252,20 +319,20 @@
       "horizon_reason": "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna.",
       "quote": {
         "ticker": "HPB",
-        "last_price": 310.0,
-        "change_pct": 0.65,
-        "turnover_eur": 1240.0,
-        "volume": 4.0,
-        "vwap_price": 310.0,
+        "last_price": 308.0,
+        "change_pct": 0.0,
+        "turnover_eur": 3704.0,
+        "volume": 12.0,
+        "vwap_price": 308.66666666667,
         "market_segment": "RO",
         "isin": "HRHPB0RA0002",
         "is_traded": true
       },
       "technical": {
-        "rsi": 49.27267981300885,
-        "ma50": 307.169856,
+        "rsi": 41.45728643216098,
+        "ma50": 307.640566,
         "trend": "sideways",
-        "status": "RSI 49.3, blizu MA50"
+        "status": "RSI 41.5, blizu MA50"
       },
       "sentiment": {
         "sentiment": "neutral",
@@ -276,10 +343,20 @@
         "reason": "Dugoročni horizont ignorira kratkoročni šum.",
         "urgent": false
       },
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.35,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan"
+        ]
+      },
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-06-18T12:36:45.660408+02:00"
+      "checked_at": "2026-06-18T12:54:15.265871+02:00"
     },
     {
       "ticker": "AUHR",
@@ -315,10 +392,20 @@
         "reason": "Dugoročni horizont ignorira kratkoročni šum.",
         "urgent": false
       },
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.35,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan"
+        ]
+      },
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-06-18T12:36:45.660408+02:00"
+      "checked_at": "2026-06-18T12:54:15.265871+02:00"
     },
     {
       "ticker": "ERNT",
@@ -332,9 +419,9 @@
         "ticker": "ERNT",
         "last_price": 205.0,
         "change_pct": 0.49,
-        "turnover_eur": 76771.0,
-        "volume": 375.0,
-        "vwap_price": 204.72266666667,
+        "turnover_eur": 96861.0,
+        "volume": 473.0,
+        "vwap_price": 204.78012684989,
         "market_segment": "RR",
         "isin": "HRERNTRA0000",
         "is_traded": true
@@ -354,10 +441,21 @@
         "reason": "Dugoročni horizont ignorira kratkoročni šum.",
         "urgent": false
       },
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.4,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "promet je povišen"
+        ]
+      },
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-06-18T12:36:45.660408+02:00"
+      "checked_at": "2026-06-18T12:54:15.265871+02:00"
     },
     {
       "ticker": "ZABA",
@@ -371,9 +469,9 @@
         "ticker": "ZABA",
         "last_price": 23.5,
         "change_pct": 0.86,
-        "turnover_eur": 54616.5,
-        "volume": 2327.0,
-        "vwap_price": 23.470777825526,
+        "turnover_eur": 54851.5,
+        "volume": 2337.0,
+        "vwap_price": 23.470902866923,
         "market_segment": "RR",
         "isin": "HRZABARA0009",
         "is_traded": true
@@ -393,10 +491,21 @@
         "reason": "Dugoročni horizont ignorira kratkoročni šum.",
         "urgent": false
       },
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.4,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "promet je povišen"
+        ]
+      },
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-06-18T12:36:45.660408+02:00"
+      "checked_at": "2026-06-18T12:54:15.265871+02:00"
     },
     {
       "ticker": "ZITO",
@@ -432,10 +541,20 @@
         "reason": "Dugoročni horizont ignorira kratkoročni šum.",
         "urgent": false
       },
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.35,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan"
+        ]
+      },
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-06-18T12:36:45.660408+02:00"
+      "checked_at": "2026-06-18T12:54:15.265871+02:00"
     }
   ],
   "opportunities": [
@@ -460,7 +579,19 @@
       },
       "action": "KUPI",
       "reason": "Likvidnost, dnevni momentum i tehnički trend su pozitivni.",
-      "score": 10.5
+      "score": 10.5,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "RAST",
+        "confidence": 0.66,
+        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
+        "drivers": [
+          "cijena je iznad simuliranog MA50 trenda",
+          "dnevni momentum je pozitivan",
+          "promet je povišen"
+        ]
+      }
     },
     {
       "ticker": "CIAK",
@@ -483,30 +614,53 @@
       },
       "action": "PRATI",
       "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
-      "score": 7.5508
+      "score": 7.5508,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "RAST",
+        "confidence": 0.61,
+        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
+        "drivers": [
+          "cijena je iznad simuliranog MA50 trenda",
+          "dnevni momentum je pozitivan"
+        ]
+      }
     },
     {
       "ticker": "PODR",
       "quote": {
         "ticker": "PODR",
-        "last_price": 153.5,
-        "change_pct": 2.68,
-        "turnover_eur": 65323.5,
-        "volume": 427.0,
-        "vwap_price": 152.98243559719,
+        "last_price": 153.0,
+        "change_pct": 2.34,
+        "turnover_eur": 68689.5,
+        "volume": 449.0,
+        "vwap_price": 152.98329621381,
         "market_segment": "RP",
         "isin": "HRPODRRA0004",
         "is_traded": true
       },
       "technical": {
-        "rsi": 77.8361206647588,
-        "ma50": 148.28145999999998,
+        "rsi": 73.04095877782196,
+        "ma50": 148.43570400000002,
         "trend": "uptrend",
-        "status": "RSI 77.8, cijena iznad MA50"
+        "status": "RSI 73.0, cijena iznad MA50"
       },
       "action": "KUPI",
       "reason": "Likvidnost, dnevni momentum i tehnički trend su pozitivni.",
-      "score": 5.486470000000001
+      "score": 5.2137899999999995,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "RAST",
+        "confidence": 0.66,
+        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
+        "drivers": [
+          "cijena je iznad simuliranog MA50 trenda",
+          "dnevni momentum je pozitivan",
+          "promet je povišen"
+        ]
+      }
     },
     {
       "ticker": "ARNT",
@@ -529,7 +683,17 @@
       },
       "action": "PRATI",
       "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
-      "score": 3.482368
+      "score": 3.482368,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "RAST",
+        "confidence": 0.52,
+        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
+        "drivers": [
+          "cijena je iznad simuliranog MA50 trenda"
+        ]
+      }
     },
     {
       "ticker": "ADRS",
@@ -552,30 +716,51 @@
       },
       "action": "PRATI",
       "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
-      "score": 2.92116
+      "score": 2.92116,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "RAST",
+        "confidence": 0.52,
+        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
+        "drivers": [
+          "cijena je iznad simuliranog MA50 trenda"
+        ]
+      }
     },
     {
-      "ticker": "ADRS2",
+      "ticker": "KODT2",
       "quote": {
-        "ticker": "ADRS2",
-        "last_price": 102.0,
-        "change_pct": 0.49,
-        "turnover_eur": 95160.0,
-        "volume": 941.0,
-        "vwap_price": 101.12646121148,
+        "ticker": "KODT2",
+        "last_price": 4260.0,
+        "change_pct": 0.95,
+        "turnover_eur": 59160.0,
+        "volume": 14.0,
+        "vwap_price": 4225.7142857143,
         "market_segment": "RR",
-        "isin": "HRADRSPA0009",
+        "isin": "HRKODTPA0009",
         "is_traded": true
       },
       "technical": {
-        "rsi": 47.244992515503554,
-        "ma50": 101.26871,
+        "rsi": 53.2055498413005,
+        "ma50": 4205.452797999999,
         "trend": "sideways",
-        "status": "RSI 47.2, blizu MA50"
+        "status": "RSI 53.2, blizu MA50"
       },
       "action": "PRATI",
       "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
-      "score": 2.3932
+      "score": 2.1332,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.4,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "promet je povišen"
+        ]
+      }
     },
     {
       "ticker": "KODT",
@@ -583,9 +768,9 @@
         "ticker": "KODT",
         "last_price": 4380.0,
         "change_pct": 0.69,
-        "turnover_eur": 52500.0,
-        "volume": 12.0,
-        "vwap_price": 4375.0,
+        "turnover_eur": 61260.0,
+        "volume": 14.0,
+        "vwap_price": 4375.7142857143,
         "market_segment": "RR",
         "isin": "HRKODTRA0007",
         "is_traded": true
@@ -598,7 +783,52 @@
       },
       "action": "PRATI",
       "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
-      "score": 1.74
+      "score": 1.9152,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.4,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "promet je povišen"
+        ]
+      }
+    },
+    {
+      "ticker": "ADRS2",
+      "quote": {
+        "ticker": "ADRS2",
+        "last_price": 101.0,
+        "change_pct": -0.49,
+        "turnover_eur": 104881.0,
+        "volume": 1037.0,
+        "vwap_price": 101.13886210222,
+        "market_segment": "RR",
+        "isin": "HRADRSPA0009",
+        "is_traded": true
+      },
+      "technical": {
+        "rsi": 36.23164816563039,
+        "ma50": 101.488392,
+        "trend": "sideways",
+        "status": "RSI 36.2, blizu MA50"
+      },
+      "action": "PRATI",
+      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
+      "score": 1.60762,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.4,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "promet je povišen"
+        ]
+      }
     },
     {
       "ticker": "MONP",
@@ -621,30 +851,17 @@
       },
       "action": "PRATI",
       "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
-      "score": 0.8114730000000001
-    },
-    {
-      "ticker": "KODT2",
-      "quote": {
-        "ticker": "KODT2",
-        "last_price": 4220.0,
-        "change_pct": 0.0,
-        "turnover_eur": 29480.0,
-        "volume": 7.0,
-        "vwap_price": 4211.4285714286,
-        "market_segment": "RR",
-        "isin": "HRKODTPA0009",
-        "is_traded": true
-      },
-      "technical": {
-        "rsi": 41.45725660608746,
-        "ma50": 4215.075236000001,
-        "trend": "sideways",
-        "status": "RSI 41.5, blizu MA50"
-      },
-      "action": "PRATI",
-      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
-      "score": 0.5896
+      "score": 0.8114730000000001,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.35,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan"
+        ]
+      }
     },
     {
       "ticker": "IG",
@@ -667,7 +884,50 @@
       },
       "action": "PRATI",
       "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
-      "score": 0.57486
+      "score": 0.57486,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.35,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan"
+        ]
+      }
+    },
+    {
+      "ticker": "MAIS",
+      "quote": {
+        "ticker": "MAIS",
+        "last_price": 66.0,
+        "change_pct": 0.0,
+        "turnover_eur": 24000.0,
+        "volume": 367.0,
+        "vwap_price": 65.395095367847,
+        "market_segment": "RR",
+        "isin": "HRMAISRA0007",
+        "is_traded": true
+      },
+      "technical": {
+        "rsi": 41.45728643216067,
+        "ma50": 65.922972,
+        "trend": "sideways",
+        "status": "RSI 41.5, blizu MA50"
+      },
+      "action": "PRATI",
+      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
+      "score": 0.48,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.35,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan"
+        ]
+      }
     },
     {
       "ticker": "ATGR",
@@ -690,30 +950,18 @@
       },
       "action": "PRATI",
       "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
-      "score": 0.43500000000000005
-    },
-    {
-      "ticker": "LKRI",
-      "quote": {
-        "ticker": "LKRI",
-        "last_price": 18.3,
-        "change_pct": 0.0,
-        "turnover_eur": 2873.1,
-        "volume": 157.0,
-        "vwap_price": 18.3,
-        "market_segment": "RO",
-        "isin": "HRLKRIRA0007",
-        "is_traded": true
-      },
-      "technical": {
-        "rsi": 41.45742873324533,
-        "ma50": 18.278643999999996,
-        "trend": "sideways",
-        "status": "RSI 41.5, blizu MA50"
-      },
-      "action": "PRATI",
-      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
-      "score": 0.057462
+      "score": 0.43500000000000005,
+      "has_dividend": false,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.4,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "promet je povišen"
+        ]
+      }
     }
   ],
   "forum_signals": [],
