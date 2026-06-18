@@ -31,14 +31,7 @@ def _headers() -> dict[str, str]:
 
 
 def parse_croatian_float(value: str) -> float:
-    cleaned = (
-        value.replace("\xa0", " ")
-        .replace("EUR", "")
-        .replace("%", "")
-        .replace("+", "")
-        .strip()
-    )
-    cleaned = re.sub(r"[^\d,.\-]", "", cleaned)
+    cleaned = _clean_numeric_text(value)
 
     if "," in cleaned and "." in cleaned:
         cleaned = cleaned.replace(".", "").replace(",", ".")
@@ -114,7 +107,7 @@ def _parse_quote_row(cells: list[str]) -> MarketQuote | None:
     if not ticker:
         return None
 
-    numbers = [parse_croatian_float(cell) for cell in cells if re.search(r"\d", cell)]
+    numbers = _extract_row_numbers(cells)
     if len(numbers) < 3:
         return None
 
@@ -144,8 +137,40 @@ def _extract_ticker(cells: list[str]) -> str | None:
 def _find_percent_value(cells: list[str], fallback: float) -> float:
     for cell in cells:
         if "%" in cell:
-            return parse_croatian_float(cell)
+            number = _extract_single_number(cell)
+            if number is not None:
+                return number
     return fallback
+
+
+def _extract_row_numbers(cells: list[str]) -> list[float]:
+    numbers: list[float] = []
+    for cell in cells:
+        number = _extract_single_number(cell)
+        if number is not None:
+            numbers.append(number)
+    return numbers
+
+
+def _extract_single_number(value: str) -> float | None:
+    cleaned = _clean_numeric_text(value)
+    if not re.fullmatch(r"-?(?:\d{1,3}(?:\.\d{3})+|\d+)(?:,\d+)?", cleaned):
+        return None
+    try:
+        return parse_croatian_float(cleaned)
+    except ValueError:
+        return None
+
+
+def _clean_numeric_text(value: str) -> str:
+    cleaned = (
+        value.replace("\xa0", " ")
+        .replace("EUR", "")
+        .replace("%", "")
+        .replace("+", "")
+        .strip()
+    )
+    return re.sub(r"[^\d,.\-]", "", cleaned)
 
 
 def _looks_like_today(post: Tag, today: date) -> bool:
