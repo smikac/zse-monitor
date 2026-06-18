@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 from datetime import datetime, time, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -34,17 +35,20 @@ def main() -> int:
     check_type = args.force if args.force != "auto" else _current_check_type(checked_at)
     if check_type is None:
         logger.info("No scheduled ZSE slot for %s; exiting cleanly.", checked_at.isoformat())
+        _write_github_output(False)
         return 0
 
     previous_payload = _load_previous_payload()
     is_manual_force = args.force != "auto"
     if not is_manual_force and _already_completed_today(previous_payload, check_type, checked_at):
         logger.info("%s check already completed today; exiting cleanly.", check_type)
+        _write_github_output(False)
         return 0
 
     analyses = analyze_portfolio(checked_at)
     _send_notifications(check_type, analyses, checked_at)
     _write_dashboard_payload(previous_payload, check_type, analyses, checked_at)
+    _write_github_output(True)
     logger.info("Completed %s check with %d analyzed positions.", check_type, len(analyses))
     return 0
 
@@ -127,6 +131,14 @@ def _sanitize_public_positions(positions: list[dict]) -> list[dict]:
         sanitized.pop("portfolio_weight_pct", None)
         sanitized_positions.append(sanitized)
     return sanitized_positions
+
+
+def _write_github_output(did_run: bool) -> None:
+    output_path = os.getenv("GITHUB_OUTPUT")
+    if not output_path:
+        return
+    with Path(output_path).open("a", encoding="utf-8") as output_file:
+        output_file.write(f"did_run={'true' if did_run else 'false'}\n")
 
 
 if __name__ == "__main__":

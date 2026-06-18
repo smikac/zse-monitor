@@ -28,6 +28,8 @@ concurrency:
 jobs:
   monitor-and-build:
     runs-on: ubuntu-latest
+    outputs:
+      did_run: ${{ steps.monitor.outputs.did_run }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -43,6 +45,7 @@ jobs:
         run: pip install -r backend/requirements.txt
 
       - name: Run ZSE monitor
+        id: monitor
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -54,34 +57,41 @@ jobs:
         run: python backend/run_monitor.py --force "${{ inputs.check_type || 'auto' }}"
 
       - name: Commit generated portfolio data
+        if: steps.monitor.outputs.did_run == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update ZSE portfolio data"
           file_pattern: frontend/public/data/portfolio.json
 
       - name: Set up Node
+        if: steps.monitor.outputs.did_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
       - name: Install frontend dependencies
+        if: steps.monitor.outputs.did_run == 'true'
         working-directory: frontend
         run: npm install
 
       - name: Build dashboard
+        if: steps.monitor.outputs.did_run == 'true'
         working-directory: frontend
         run: npm run build
 
       - name: Configure Pages
+        if: steps.monitor.outputs.did_run == 'true'
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
+        if: steps.monitor.outputs.did_run == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: frontend/dist
 
   deploy:
     needs: monitor-and-build
+    if: needs.monitor-and-build.outputs.did_run == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
