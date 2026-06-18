@@ -45,7 +45,12 @@ export default function Dashboard() {
       {error && <div className="notice">{error}</div>}
 
       <section className="alertGrid" aria-label="Hitni alarmi">
-        {alerts.length === 0 ? (
+        {positions.length === 0 ? (
+          <div className="emptyAlert">
+            <AlertTriangle size={20} />
+            <span>Nema objavljenih portfolio podataka. Pokreni workflow nakon dodavanja PORTFOLIO_JSON secreta.</span>
+          </div>
+        ) : alerts.length === 0 ? (
           <div className="emptyAlert">
             <AlertTriangle size={20} />
             <span>Nema hitnih prodajnih alarma.</span>
@@ -88,6 +93,10 @@ function AlertCard({ item }) {
 function PortfolioTable({ positions, loading }) {
   if (loading && positions.length === 0) {
     return <div className="tableState">Učitavanje tržišnih podataka...</div>;
+  }
+
+  if (positions.length === 0) {
+    return <div className="tableState">Nema podataka za prikaz.</div>;
   }
 
   return (

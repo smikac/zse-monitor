@@ -37,7 +37,8 @@ def main() -> int:
         return 0
 
     previous_payload = _load_previous_payload()
-    if _already_completed_today(previous_payload, check_type, checked_at):
+    is_manual_force = args.force != "auto"
+    if not is_manual_force and _already_completed_today(previous_payload, check_type, checked_at):
         logger.info("%s check already completed today; exiting cleanly.", check_type)
         return 0
 
