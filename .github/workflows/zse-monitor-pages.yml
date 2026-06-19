@@ -14,7 +14,9 @@ on:
           - tactical
           - summary
   schedule:
-    - cron: "*/5 7-16 * * 1-5"
+  - cron: "30 7 * * 1-5"   # 09:30 Zagreb ljeti
+  - cron: "30 13 * * 1-5"  # 15:30 Zagreb ljeti
+  - cron: "0 15 * * 1-5"   # 17:00 Zagreb ljeti
 
 permissions:
   contents: write
