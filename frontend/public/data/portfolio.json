@@ -1,10 +1,10 @@
 {
   "meta": {
-    "generated_at": "2026-07-15T17:07:18.909840+02:00",
-    "generated_at_utc": "2026-07-15T15:07:36.355802+00:00",
+    "generated_at": "2026-07-16T17:17:44.048948+02:00",
+    "generated_at_utc": "2026-07-16T15:18:08.169953+00:00",
     "check_type": "summary",
     "last_runs": {
-      "summary": "2026-07-15"
+      "summary": "2026-07-16"
     }
   },
   "positions": [
@@ -18,20 +18,20 @@
       "horizon_reason": "Vrlo visok prinos sugerira taktičko upravljanje profitom.",
       "quote": {
         "ticker": "CTKS",
-        "last_price": 105.0,
-        "change_pct": 0.0,
-        "turnover_eur": 0.0,
-        "volume": 0.0,
-        "vwap_price": 0.0,
+        "last_price": 110.0,
+        "change_pct": 4.76,
+        "turnover_eur": 50235.0,
+        "volume": 438.0,
+        "vwap_price": 114.69178082192,
         "market_segment": "RR",
         "isin": "HRCTKSRA0004",
-        "is_traded": false
+        "is_traded": true
       },
       "technical": {
-        "rsi": 41.456914421083816,
-        "ma50": 104.877454,
-        "trend": "sideways",
-        "status": "RSI 41.5, blizu MA50"
+        "rsi": 94.33256415635286,
+        "ma50": 104.48163000000001,
+        "trend": "uptrend",
+        "status": "RSI 94.3, cijena iznad MA50"
       },
       "sentiment": {
         "sentiment": "neutral",
@@ -50,18 +50,19 @@
       "dividend_status": null,
       "dividend_yield_pct": null,
       "annual_forecast": {
-        "direction": "NEUTRALNO",
-        "confidence": 0.37,
-        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "direction": "RAST",
+        "confidence": 0.66,
+        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
         "drivers": [
-          "tehnički trend je bočan",
-          "nema današnjeg prometa"
+          "cijena je iznad simuliranog MA50 trenda",
+          "dnevni momentum je pozitivan",
+          "promet je povišen"
         ]
       },
       "pnl_eur": null,
       "pnl_pct": null,
-      "wow_event": false,
-      "checked_at": "2026-07-15T17:07:18.909840+02:00"
+      "wow_event": true,
+      "checked_at": "2026-07-16T17:17:44.048948+02:00"
     },
     {
       "ticker": "RIVP",
@@ -73,20 +74,20 @@
       "horizon_reason": "Vrlo visok prinos sugerira taktičko upravljanje profitom.",
       "quote": {
         "ticker": "RIVP",
-        "last_price": 8.6,
-        "change_pct": 1.65,
-        "turnover_eur": 83944.78,
-        "volume": 9834.0,
-        "vwap_price": 8.5361785641651,
+        "last_price": 8.62,
+        "change_pct": 0.23,
+        "turnover_eur": 63297.98,
+        "volume": 7338.0,
+        "vwap_price": 8.6260534205506,
         "market_segment": "RP",
         "isin": "HRRIVPRA0000",
         "is_traded": true
       },
       "technical": {
-        "rsi": 62.97989031078579,
-        "ma50": 8.416136,
-        "trend": "uptrend",
-        "status": "RSI 63.0, cijena iznad MA50"
+        "rsi": 44.08866995073877,
+        "ma50": 8.585656000000002,
+        "trend": "sideways",
+        "status": "RSI 44.1, blizu MA50"
       },
       "sentiment": {
         "sentiment": "neutral",
@@ -103,13 +104,13 @@
       "dividend_ex_date": "2026-04-28",
       "dividend_payment_date": "2026-05-07",
       "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 3.14,
+      "dividend_yield_pct": 3.13,
       "annual_forecast": {
-        "direction": "RAST",
-        "confidence": 0.63,
-        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
+        "direction": "NEUTRALNO",
+        "confidence": 0.46,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
         "drivers": [
-          "cijena je iznad simuliranog MA50 trenda",
+          "tehnički trend je bočan",
           "promet je povišen",
           "ZSE navodi dividendu 0.27 EUR po dionici"
         ]
@@ -117,7 +118,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-07-15T17:07:18.909840+02:00"
+      "checked_at": "2026-07-16T17:17:44.048948+02:00"
     },
     {
       "ticker": "KOEI",
@@ -129,20 +130,20 @@
       "horizon_reason": "Vrlo visok prinos sugerira taktičko upravljanje profitom.",
       "quote": {
         "ticker": "KOEI",
-        "last_price": 1040.0,
-        "change_pct": 1.96,
-        "turnover_eur": 1282816.0,
-        "volume": 1244.0,
-        "vwap_price": 1031.2025723473,
+        "last_price": 1032.0,
+        "change_pct": -0.77,
+        "turnover_eur": 335752.0,
+        "volume": 324.0,
+        "vwap_price": 1036.2716049383,
         "market_segment": "RO",
         "isin": "HRKOEIRA0009",
         "is_traded": true
       },
       "technical": {
-        "rsi": 67.45711093766761,
-        "ma50": 1013.81591,
-        "trend": "uptrend",
-        "status": "RSI 67.5, cijena iznad MA50"
+        "rsi": 33.60791280667365,
+        "ma50": 1040.529992,
+        "trend": "sideways",
+        "status": "RSI 33.6, blizu MA50"
       },
       "sentiment": {
         "sentiment": "neutral",
@@ -159,13 +160,13 @@
       "dividend_ex_date": "2026-06-25",
       "dividend_payment_date": "2026-07-10",
       "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 0.38,
+      "dividend_yield_pct": 0.39,
       "annual_forecast": {
-        "direction": "RAST",
-        "confidence": 0.63,
-        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
+        "direction": "NEUTRALNO",
+        "confidence": 0.46,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
         "drivers": [
-          "cijena je iznad simuliranog MA50 trenda",
+          "tehnički trend je bočan",
           "promet je povišen",
           "ZSE navodi dividendu 4.00 EUR po dionici"
         ]
@@ -173,7 +174,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-07-15T17:07:18.909840+02:00"
+      "checked_at": "2026-07-16T17:17:44.048948+02:00"
     },
     {
       "ticker": "DLKV",
@@ -185,20 +186,20 @@
       "horizon_reason": "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna.",
       "quote": {
         "ticker": "DLKV",
-        "last_price": 17.15,
-        "change_pct": 0.88,
-        "turnover_eur": 206884.3,
-        "volume": 12115.0,
-        "vwap_price": 17.076706562113,
+        "last_price": 16.95,
+        "change_pct": -1.17,
+        "turnover_eur": 42643.45,
+        "volume": 2512.0,
+        "vwap_price": 16.975895700637,
         "market_segment": "RO",
         "isin": "HRDLKVRA0006",
         "is_traded": true
       },
       "technical": {
-        "rsi": 52.2687609075041,
-        "ma50": 16.945106,
+        "rsi": 30.174563591022405,
+        "ma50": 17.173148,
         "trend": "sideways",
-        "status": "RSI 52.3, blizu MA50"
+        "status": "RSI 30.2, blizu MA50"
       },
       "sentiment": {
         "sentiment": "neutral",
@@ -215,7 +216,7 @@
       "dividend_ex_date": "2026-07-09",
       "dividend_payment_date": "2026-08-10",
       "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 0.64,
+      "dividend_yield_pct": 0.65,
       "annual_forecast": {
         "direction": "NEUTRALNO",
         "confidence": 0.46,
@@ -229,7 +230,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-07-15T17:07:18.909840+02:00"
+      "checked_at": "2026-07-16T17:17:44.048948+02:00"
     },
     {
       "ticker": "HT",
@@ -241,20 +242,20 @@
       "horizon_reason": "Veći udio u portfelju i miran sentiment podržavaju dugoročno držanje.",
       "quote": {
         "ticker": "HT",
-        "last_price": 41.0,
-        "change_pct": 0.0,
-        "turnover_eur": 68629.4,
-        "volume": 1677.0,
-        "vwap_price": 40.923911747168,
+        "last_price": 40.6,
+        "change_pct": -0.98,
+        "turnover_eur": 86982.7,
+        "volume": 2135.0,
+        "vwap_price": 40.74131147541,
         "market_segment": "RP",
         "isin": "HRHT00RA0005",
         "is_traded": true
       },
       "technical": {
-        "rsi": 41.45601617795738,
-        "ma50": 40.95215399999999,
+        "rsi": 31.76318392816374,
+        "ma50": 41.040026,
         "trend": "sideways",
-        "status": "RSI 41.5, blizu MA50"
+        "status": "RSI 31.8, blizu MA50"
       },
       "sentiment": {
         "sentiment": "neutral",
@@ -271,7 +272,7 @@
       "dividend_ex_date": "2026-06-03",
       "dividend_payment_date": "2026-07-03",
       "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 4.12,
+      "dividend_yield_pct": 4.16,
       "annual_forecast": {
         "direction": "NEUTRALNO",
         "confidence": 0.46,
@@ -285,7 +286,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-07-15T17:07:18.909840+02:00"
+      "checked_at": "2026-07-16T17:17:44.048948+02:00"
     },
     {
       "ticker": "JDRN",
@@ -340,7 +341,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-07-15T17:07:18.909840+02:00"
+      "checked_at": "2026-07-16T17:17:44.048948+02:00"
     },
     {
       "ticker": "HPB",
@@ -352,20 +353,20 @@
       "horizon_reason": "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna.",
       "quote": {
         "ticker": "HPB",
-        "last_price": 334.0,
-        "change_pct": 0.0,
-        "turnover_eur": 15364.0,
+        "last_price": 336.0,
+        "change_pct": 0.6,
+        "turnover_eur": 15398.0,
         "volume": 46.0,
-        "vwap_price": 334.0,
+        "vwap_price": 334.73913043478,
         "market_segment": "RO",
         "isin": "HRHPB0RA0002",
         "is_traded": true
       },
       "technical": {
-        "rsi": 41.45720846521448,
-        "ma50": 333.61021999999997,
+        "rsi": 48.63393938071924,
+        "ma50": 333.1382919999999,
         "trend": "sideways",
-        "status": "RSI 41.5, blizu MA50"
+        "status": "RSI 48.6, blizu MA50"
       },
       "sentiment": {
         "sentiment": "neutral",
@@ -382,7 +383,7 @@
       "dividend_ex_date": "2026-01-05",
       "dividend_payment_date": "2026-01-08",
       "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 6.54,
+      "dividend_yield_pct": 6.5,
       "annual_forecast": {
         "direction": "NEUTRALNO",
         "confidence": 0.41,
@@ -395,7 +396,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-07-15T17:07:18.909840+02:00"
+      "checked_at": "2026-07-16T17:17:44.048948+02:00"
     },
     {
       "ticker": "AUHR",
@@ -409,8 +410,8 @@
         "ticker": "AUHR",
         "last_price": 220.0,
         "change_pct": 0.0,
-        "turnover_eur": 1100.0,
-        "volume": 5.0,
+        "turnover_eur": 12100.0,
+        "volume": 55.0,
         "vwap_price": 220.0,
         "market_segment": "RR",
         "isin": "HRAUHRRA0009",
@@ -450,7 +451,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-07-15T17:07:18.909840+02:00"
+      "checked_at": "2026-07-16T17:17:44.048948+02:00"
     },
     {
       "ticker": "ERNT",
@@ -462,20 +463,20 @@
       "horizon_reason": "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna.",
       "quote": {
         "ticker": "ERNT",
-        "last_price": 202.0,
-        "change_pct": 0.5,
-        "turnover_eur": 25288.0,
-        "volume": 126.0,
-        "vwap_price": 200.69841269841,
+        "last_price": 201.0,
+        "change_pct": -0.5,
+        "turnover_eur": 16094.0,
+        "volume": 80.0,
+        "vwap_price": 201.175,
         "market_segment": "RR",
         "isin": "HRERNTRA0000",
         "is_traded": true
       },
       "technical": {
-        "rsi": 47.37060115981702,
-        "ma50": 200.527014,
+        "rsi": 36.13040281068726,
+        "ma50": 201.99656599999997,
         "trend": "sideways",
-        "status": "RSI 47.4, blizu MA50"
+        "status": "RSI 36.1, blizu MA50"
       },
       "sentiment": {
         "sentiment": "neutral",
@@ -492,7 +493,7 @@
       "dividend_ex_date": "2026-06-15",
       "dividend_payment_date": "2026-07-07",
       "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 6.69,
+      "dividend_yield_pct": 6.73,
       "annual_forecast": {
         "direction": "NEUTRALNO",
         "confidence": 0.41,
@@ -505,7 +506,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-07-15T17:07:18.909840+02:00"
+      "checked_at": "2026-07-16T17:17:44.048948+02:00"
     },
     {
       "ticker": "ZABA",
@@ -517,20 +518,20 @@
       "horizon_reason": "Veći udio u portfelju i miran sentiment podržavaju dugoročno držanje.",
       "quote": {
         "ticker": "ZABA",
-        "last_price": 22.6,
-        "change_pct": 0.0,
-        "turnover_eur": 49000.5,
-        "volume": 2165.0,
-        "vwap_price": 22.633025404157,
+        "last_price": 22.7,
+        "change_pct": 0.44,
+        "turnover_eur": 12619.0,
+        "volume": 556.0,
+        "vwap_price": 22.696043165468,
         "market_segment": "RR",
         "isin": "HRZABARA0009",
         "is_traded": true
       },
       "technical": {
-        "rsi": 41.45521247324986,
-        "ma50": 22.573621999999997,
+        "rsi": 46.62733216392914,
+        "ma50": 22.551150000000007,
         "trend": "sideways",
-        "status": "RSI 41.5, blizu MA50"
+        "status": "RSI 46.6, blizu MA50"
       },
       "sentiment": {
         "sentiment": "neutral",
@@ -547,21 +548,20 @@
       "dividend_ex_date": "2026-04-15",
       "dividend_payment_date": "2026-04-29",
       "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 5.62,
+      "dividend_yield_pct": 5.59,
       "annual_forecast": {
         "direction": "NEUTRALNO",
-        "confidence": 0.46,
+        "confidence": 0.41,
         "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
         "drivers": [
           "tehnički trend je bočan",
-          "promet je povišen",
           "ZSE navodi dividendu 1.27 EUR po dionici"
         ]
       },
       "pnl_eur": null,
       "pnl_pct": null,
-      "wow_event": true,
-      "checked_at": "2026-07-15T17:07:18.909840+02:00"
+      "wow_event": false,
+      "checked_at": "2026-07-16T17:17:44.048948+02:00"
     },
     {
       "ticker": "ZITO",
@@ -573,20 +573,20 @@
       "horizon_reason": "Nema izraženog kratkoročnog rizika, pa se pozicija tretira kao dugoročna.",
       "quote": {
         "ticker": "ZITO",
-        "last_price": 18.6,
-        "change_pct": 0.0,
-        "turnover_eur": 1532.0,
-        "volume": 82.0,
-        "vwap_price": 18.682926829268,
+        "last_price": 18.5,
+        "change_pct": -0.54,
+        "turnover_eur": 31968.8,
+        "volume": 1728.0,
+        "vwap_price": 18.500462962963,
         "market_segment": "RO",
         "isin": "HRZTOSRB0002",
         "is_traded": true
       },
       "technical": {
-        "rsi": 41.45616641901948,
-        "ma50": 18.578294,
+        "rsi": 35.747085835393875,
+        "ma50": 18.600783999999997,
         "trend": "sideways",
-        "status": "RSI 41.5, blizu MA50"
+        "status": "RSI 35.7, blizu MA50"
       },
       "sentiment": {
         "sentiment": "neutral",
@@ -603,7 +603,7 @@
       "dividend_ex_date": "2026-06-25",
       "dividend_payment_date": "2026-07-03",
       "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 3.28,
+      "dividend_yield_pct": 3.3,
       "annual_forecast": {
         "direction": "NEUTRALNO",
         "confidence": 0.41,
@@ -616,154 +616,32 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-07-15T17:07:18.909840+02:00"
+      "checked_at": "2026-07-16T17:17:44.048948+02:00"
     }
   ],
   "opportunities": [
     {
-      "ticker": "ADPL",
+      "ticker": "JDPL",
       "quote": {
-        "ticker": "ADPL",
-        "last_price": 30.7,
-        "change_pct": 3.72,
-        "turnover_eur": 245395.7,
-        "volume": 8102.0,
-        "vwap_price": 30.288286842755,
-        "market_segment": "RP",
-        "isin": "HRADPLRA0006",
-        "is_traded": true
-      },
-      "technical": {
-        "rsi": 91.42784032753326,
-        "ma50": 29.265174,
-        "trend": "uptrend",
-        "status": "RSI 91.4, cijena iznad MA50"
-      },
-      "action": "KUPI",
-      "reason": "Likvidnost, dnevni momentum i tehnički trend su pozitivni. Dodatno: dividendni prinos oko 2.61%, 12-mjesečna prognoza naginje rastu.",
-      "score": 14.633,
-      "has_dividend": true,
-      "dividend_per_share": 0.8,
-      "dividend_currency": "EUR",
-      "dividend_ex_date": "2026-07-22",
-      "dividend_payment_date": "2026-07-28",
-      "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 2.61,
-      "annual_forecast": {
-        "direction": "RAST",
-        "confidence": 0.72,
-        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
-        "drivers": [
-          "cijena je iznad simuliranog MA50 trenda",
-          "dnevni momentum je pozitivan",
-          "promet je povišen",
-          "ZSE navodi dividendu 0.80 EUR po dionici"
-        ]
-      }
-    },
-    {
-      "ticker": "IG",
-      "quote": {
-        "ticker": "IG",
-        "last_price": 75.4,
-        "change_pct": 2.17,
-        "turnover_eur": 47484.8,
-        "volume": 634.0,
-        "vwap_price": 74.897160883281,
-        "market_segment": "RO",
-        "isin": "HRIG00RA0009",
-        "is_traded": true
-      },
-      "technical": {
-        "rsi": 70.5512984248618,
-        "ma50": 73.307692,
-        "trend": "uptrend",
-        "status": "RSI 70.6, cijena iznad MA50"
-      },
-      "action": "KUPI",
-      "reason": "Likvidnost, dnevni momentum i tehnički trend su pozitivni. Dodatno: dividendni prinos oko 3.98%, 12-mjesečna prognoza naginje rastu.",
-      "score": 11.513,
-      "has_dividend": true,
-      "dividend_per_share": 3.0,
-      "dividend_currency": "EUR",
-      "dividend_ex_date": "2026-07-22",
-      "dividend_payment_date": "2026-07-29",
-      "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 3.98,
-      "annual_forecast": {
-        "direction": "RAST",
-        "confidence": 0.72,
-        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
-        "drivers": [
-          "cijena je iznad simuliranog MA50 trenda",
-          "dnevni momentum je pozitivan",
-          "promet je povišen",
-          "ZSE navodi dividendu 3.00 EUR po dionici"
-        ]
-      }
-    },
-    {
-      "ticker": "ADRS2",
-      "quote": {
-        "ticker": "ADRS2",
-        "last_price": 103.5,
-        "change_pct": 1.97,
-        "turnover_eur": 61363.5,
-        "volume": 599.0,
-        "vwap_price": 102.44323873122,
+        "ticker": "JDPL",
+        "last_price": 12.9,
+        "change_pct": 4.88,
+        "turnover_eur": 18307.6,
+        "volume": 1500.0,
+        "vwap_price": 12.205066666667,
         "market_segment": "RR",
-        "isin": "HRADRSPA0009",
+        "isin": "HRJDPLRA0007",
         "is_traded": true
       },
       "technical": {
-        "rsi": 67.60249211599117,
-        "ma50": 100.881504,
+        "rsi": 94.33512224209895,
+        "ma50": 12.25285,
         "trend": "uptrend",
-        "status": "RSI 67.6, cijena iznad MA50"
-      },
-      "action": "KUPI",
-      "reason": "Likvidnost, dnevni momentum i tehnički trend su pozitivni. Dodatno: dividendni prinos oko 3.01%, 12-mjesečna prognoza naginje rastu.",
-      "score": 11.251,
-      "has_dividend": true,
-      "dividend_per_share": 3.12,
-      "dividend_currency": "EUR",
-      "dividend_ex_date": "2026-06-17",
-      "dividend_payment_date": "2026-07-07",
-      "dividend_status": "proposed,voted",
-      "dividend_yield_pct": 3.01,
-      "annual_forecast": {
-        "direction": "RAST",
-        "confidence": 0.63,
-        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
-        "drivers": [
-          "cijena je iznad simuliranog MA50 trenda",
-          "promet je povišen",
-          "ZSE navodi dividendu 3.12 EUR po dionici"
-        ]
-      }
-    },
-    {
-      "ticker": "PDBA",
-      "quote": {
-        "ticker": "PDBA",
-        "last_price": 77.0,
-        "change_pct": 3.36,
-        "turnover_eur": 12916.0,
-        "volume": 168.0,
-        "vwap_price": 76.880952380952,
-        "market_segment": "RR",
-        "isin": "HRPDBARA0008",
-        "is_traded": true
-      },
-      "technical": {
-        "rsi": 86.99430936368324,
-        "ma50": 73.740828,
-        "trend": "uptrend",
-        "status": "RSI 87.0, cijena iznad MA50"
+        "status": "RSI 94.3, cijena iznad MA50"
       },
       "action": "KUPI",
       "reason": "Likvidnost, dnevni momentum i tehnički trend su pozitivni. Dodatno: 12-mjesečna prognoza naginje rastu.",
-      "score": 10.618,
+      "score": 12.246,
       "has_dividend": false,
       "dividend_per_share": null,
       "dividend_currency": null,
@@ -782,113 +660,74 @@
       }
     },
     {
-      "ticker": "ZB",
-      "quote": {
-        "ticker": "ZB",
-        "last_price": 6.5,
-        "change_pct": 6.56,
-        "turnover_eur": 3251.5,
-        "volume": 531.0,
-        "vwap_price": 6.123352165725,
-        "market_segment": "RO",
-        "isin": "HRZB00RA0003",
-        "is_traded": true
-      },
-      "technical": {
-        "rsi": 94.3753700414446,
-        "ma50": 6.173914000000001,
-        "trend": "uptrend",
-        "status": "RSI 94.4, cijena iznad MA50"
-      },
-      "action": "KUPI",
-      "reason": "Kombinacija relativne isplativosti, dividende/prognoze i tržišne likvidnosti je pozitivna. Dodatno: 12-mjesečna prognoza naginje rastu.",
-      "score": 9.387,
-      "has_dividend": true,
-      "dividend_per_share": 0.06,
-      "dividend_currency": "EUR",
-      "dividend_ex_date": "2026-06-10",
-      "dividend_payment_date": "2026-06-18",
-      "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 0.92,
-      "annual_forecast": {
-        "direction": "RAST",
-        "confidence": 0.67,
-        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
-        "drivers": [
-          "cijena je iznad simuliranog MA50 trenda",
-          "dnevni momentum je pozitivan",
-          "ZSE navodi dividendu 0.06 EUR po dionici"
-        ]
-      }
-    },
-    {
-      "ticker": "ADRS",
-      "quote": {
-        "ticker": "ADRS",
-        "last_price": 160.0,
-        "change_pct": 1.27,
-        "turnover_eur": 18173.0,
-        "volume": 114.0,
-        "vwap_price": 159.41228070175,
-        "market_segment": "RR",
-        "isin": "HRADRSRA0007",
-        "is_traded": true
-      },
-      "technical": {
-        "rsi": 57.600500999590565,
-        "ma50": 157.324086,
-        "trend": "uptrend",
-        "status": "RSI 57.6, cijena iznad MA50"
-      },
-      "action": "KUPI",
-      "reason": "Likvidnost, dnevni momentum i tehnički trend su pozitivni. Dodatno: 12-mjesečna prognoza naginje rastu.",
-      "score": 9.316,
-      "has_dividend": true,
-      "dividend_per_share": 3.12,
-      "dividend_currency": "EUR",
-      "dividend_ex_date": "2026-06-17",
-      "dividend_payment_date": "2026-07-07",
-      "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 1.95,
-      "annual_forecast": {
-        "direction": "RAST",
-        "confidence": 0.58,
-        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
-        "drivers": [
-          "cijena je iznad simuliranog MA50 trenda",
-          "ZSE navodi dividendu 3.12 EUR po dionici"
-        ]
-      }
-    },
-    {
       "ticker": "CKML",
       "quote": {
         "ticker": "CKML",
-        "last_price": 11.0,
-        "change_pct": 0.92,
-        "turnover_eur": 46121.0,
-        "volume": 4201.0,
-        "vwap_price": 10.978576529398,
+        "last_price": 11.2,
+        "change_pct": 1.82,
+        "turnover_eur": 85452.2,
+        "volume": 7760.0,
+        "vwap_price": 11.011881443299,
         "market_segment": "RO",
         "isin": "HRCKMLRA0008",
         "is_traded": true
       },
       "technical": {
-        "rsi": 52.79672578444764,
-        "ma50": 10.863193999999998,
-        "trend": "sideways",
-        "status": "RSI 52.8, blizu MA50"
+        "rsi": 65.4185800070644,
+        "ma50": 10.937232000000002,
+        "trend": "uptrend",
+        "status": "RSI 65.4, cijena iznad MA50"
       },
-      "action": "PRATI",
-      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti. Dodatno: dividendni prinos oko 4.55%.",
-      "score": 3.435,
+      "action": "KUPI",
+      "reason": "Likvidnost, dnevni momentum i tehnički trend su pozitivni. Dodatno: dividendni prinos oko 4.46%, 12-mjesečna prognoza naginje rastu.",
+      "score": 12.09,
       "has_dividend": true,
       "dividend_per_share": 0.5,
       "dividend_currency": "EUR",
       "dividend_ex_date": "2026-08-28",
       "dividend_payment_date": "2026-09-15",
-      "dividend_status": "proposed",
-      "dividend_yield_pct": 4.55,
+      "dividend_status": "MojeDionice 2026",
+      "dividend_yield_pct": 4.46,
+      "annual_forecast": {
+        "direction": "RAST",
+        "confidence": 0.63,
+        "summary": "Model očekuje veću vjerojatnost rasta u sljedećih godinu dana, uz normalan tržišni rizik.",
+        "drivers": [
+          "cijena je iznad simuliranog MA50 trenda",
+          "promet je povišen",
+          "ZSE navodi dividendu 0.50 EUR po dionici"
+        ]
+      }
+    },
+    {
+      "ticker": "ADRS2",
+      "quote": {
+        "ticker": "ADRS2",
+        "last_price": 102.5,
+        "change_pct": -0.97,
+        "turnover_eur": 344163.5,
+        "volume": 3332.0,
+        "vwap_price": 103.29036614646,
+        "market_segment": "RR",
+        "isin": "HRADRSPA0009",
+        "is_traded": true
+      },
+      "technical": {
+        "rsi": 31.84849856647054,
+        "ma50": 103.59833799999998,
+        "trend": "sideways",
+        "status": "RSI 31.8, blizu MA50"
+      },
+      "action": "PRATI",
+      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti. Dodatno: dividendni prinos oko 3.04%.",
+      "score": 3.094,
+      "has_dividend": true,
+      "dividend_per_share": 3.12,
+      "dividend_currency": "EUR",
+      "dividend_ex_date": "2026-06-17",
+      "dividend_payment_date": "2026-07-07",
+      "dividend_status": "proposed,voted",
+      "dividend_yield_pct": 3.04,
       "annual_forecast": {
         "direction": "NEUTRALNO",
         "confidence": 0.46,
@@ -896,7 +735,46 @@
         "drivers": [
           "tehnički trend je bočan",
           "promet je povišen",
-          "ZSE navodi dividendu 0.50 EUR po dionici"
+          "ZSE navodi dividendu 3.12 EUR po dionici"
+        ]
+      }
+    },
+    {
+      "ticker": "ATGR",
+      "quote": {
+        "ticker": "ATGR",
+        "last_price": 51.0,
+        "change_pct": 0.99,
+        "turnover_eur": 27404.5,
+        "volume": 538.0,
+        "vwap_price": 50.937732342007,
+        "market_segment": "RP",
+        "isin": "HRATGRRA0003",
+        "is_traded": true
+      },
+      "technical": {
+        "rsi": 53.74260355029582,
+        "ma50": 50.32197599999999,
+        "trend": "sideways",
+        "status": "RSI 53.7, blizu MA50"
+      },
+      "action": "PRATI",
+      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti. Dodatno: dividendni prinos oko 3.43%.",
+      "score": 2.739,
+      "has_dividend": true,
+      "dividend_per_share": 1.75,
+      "dividend_currency": "EUR",
+      "dividend_ex_date": "2026-06-25",
+      "dividend_payment_date": "2026-07-02",
+      "dividend_status": "MojeDionice 2026",
+      "dividend_yield_pct": 3.43,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.41,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "ZSE navodi dividendu 1.75 EUR po dionici"
         ]
       }
     },
@@ -905,23 +783,23 @@
       "quote": {
         "ticker": "JDGT",
         "last_price": 195.0,
-        "change_pct": 0.52,
-        "turnover_eur": 14040.0,
-        "volume": 72.0,
+        "change_pct": 0.0,
+        "turnover_eur": 2340.0,
+        "volume": 12.0,
         "vwap_price": 195.0,
         "market_segment": "RR",
         "isin": "HRJDGTRA0000",
         "is_traded": true
       },
       "technical": {
-        "rsi": 47.621627681040195,
-        "ma50": 193.530288,
+        "rsi": 41.45701934660895,
+        "ma50": 194.772438,
         "trend": "sideways",
-        "status": "RSI 47.6, blizu MA50"
+        "status": "RSI 41.5, blizu MA50"
       },
       "action": "PRATI",
       "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti. Dodatno: dividendni prinos oko 5.64%.",
-      "score": 2.775,
+      "score": 2.021,
       "has_dividend": true,
       "dividend_per_share": 11.0,
       "dividend_currency": "EUR",
@@ -940,73 +818,112 @@
       }
     },
     {
-      "ticker": "BRIN",
+      "ticker": "PODR",
       "quote": {
-        "ticker": "BRIN",
-        "last_price": 14.0,
-        "change_pct": 0.72,
-        "turnover_eur": 6253.2,
-        "volume": 448.0,
-        "vwap_price": 13.958035714286,
-        "market_segment": "RR",
-        "isin": "HRBRINRA0006",
+        "ticker": "PODR",
+        "last_price": 160.0,
+        "change_pct": 0.0,
+        "turnover_eur": 34945.0,
+        "volume": 221.0,
+        "vwap_price": 158.1221719457,
+        "market_segment": "RP",
+        "isin": "HRPODRRA0004",
         "is_traded": true
       },
       "technical": {
-        "rsi": 50.17163982043841,
-        "ma50": 13.86018,
+        "rsi": 41.457042299138365,
+        "ma50": 159.81328599999998,
         "trend": "sideways",
-        "status": "RSI 50.2, blizu MA50"
+        "status": "RSI 41.5, blizu MA50"
       },
       "action": "PRATI",
-      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti. Dodatno: dividendni prinos oko 5.00%.",
-      "score": 2.595,
+      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti. Dodatno: dividendni prinos oko 2.00%.",
+      "score": 1.399,
       "has_dividend": true,
-      "dividend_per_share": 0.7,
+      "dividend_per_share": 3.2,
       "dividend_currency": "EUR",
-      "dividend_ex_date": "2026-04-27",
-      "dividend_payment_date": "2026-05-15",
+      "dividend_ex_date": "2026-06-29",
+      "dividend_payment_date": "2026-07-10",
       "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 5.0,
+      "dividend_yield_pct": 2.0,
       "annual_forecast": {
         "direction": "NEUTRALNO",
         "confidence": 0.41,
         "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
         "drivers": [
           "tehnički trend je bočan",
-          "ZSE navodi dividendu 0.70 EUR po dionici"
+          "ZSE navodi dividendu 3.20 EUR po dionici"
         ]
       }
     },
     {
-      "ticker": "SPAN",
+      "ticker": "VLEN",
       "quote": {
-        "ticker": "SPAN",
-        "last_price": 56.6,
+        "ticker": "VLEN",
+        "last_price": 4.1,
         "change_pct": 0.0,
-        "turnover_eur": 87171.8,
-        "volume": 1554.0,
-        "vwap_price": 56.095109395109,
-        "market_segment": "RO",
-        "isin": "HRSPANRA0007",
+        "turnover_eur": 62962.83,
+        "volume": 15696.0,
+        "vwap_price": 4.0113933486239,
+        "market_segment": "RR",
+        "isin": "HRVLENRB0001",
         "is_traded": true
       },
       "technical": {
-        "rsi": 41.457608496612416,
-        "ma50": 56.533939999999994,
+        "rsi": 41.449031171019136,
+        "ma50": 4.0952079999999995,
+        "trend": "sideways",
+        "status": "RSI 41.4, blizu MA50"
+      },
+      "action": "PRATI",
+      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
+      "score": 1.259,
+      "has_dividend": false,
+      "dividend_per_share": null,
+      "dividend_currency": null,
+      "dividend_ex_date": null,
+      "dividend_payment_date": null,
+      "dividend_status": null,
+      "dividend_yield_pct": null,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.4,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "promet je povišen"
+        ]
+      }
+    },
+    {
+      "ticker": "BSQR",
+      "quote": {
+        "ticker": "BSQR",
+        "last_price": 29.2,
+        "change_pct": 0.0,
+        "turnover_eur": 50425.8,
+        "volume": 1719.0,
+        "vwap_price": 29.334380453752,
+        "market_segment": "RO",
+        "isin": "HRMRULRB0008",
+        "is_traded": true
+      },
+      "technical": {
+        "rsi": 41.45764316138189,
+        "ma50": 29.165924000000004,
         "trend": "sideways",
         "status": "RSI 41.5, blizu MA50"
       },
       "action": "PRATI",
-      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti. Dodatno: dividendni prinos oko 2.39%.",
-      "score": 2.58,
+      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
+      "score": 1.212,
       "has_dividend": true,
-      "dividend_per_share": 1.35,
+      "dividend_per_share": 0.17,
       "dividend_currency": "EUR",
-      "dividend_ex_date": "2026-06-24",
-      "dividend_payment_date": "2026-07-03",
-      "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 2.39,
+      "dividend_ex_date": "2026-08-27",
+      "dividend_payment_date": "2026-09-03",
+      "dividend_status": "proposed",
+      "dividend_yield_pct": 0.58,
       "annual_forecast": {
         "direction": "NEUTRALNO",
         "confidence": 0.46,
@@ -1014,7 +931,86 @@
         "drivers": [
           "tehnički trend je bočan",
           "promet je povišen",
-          "ZSE navodi dividendu 1.35 EUR po dionici"
+          "ZSE navodi dividendu 0.17 EUR po dionici"
+        ]
+      }
+    },
+    {
+      "ticker": "KODT2",
+      "quote": {
+        "ticker": "KODT2",
+        "last_price": 4250.0,
+        "change_pct": -0.7,
+        "turnover_eur": 50990.0,
+        "volume": 12.0,
+        "vwap_price": 4249.1666666667,
+        "market_segment": "RR",
+        "isin": "HRKODTPA0009",
+        "is_traded": true
+      },
+      "technical": {
+        "rsi": 34.245170346295225,
+        "ma50": 4281.48397,
+        "trend": "sideways",
+        "status": "RSI 34.2, blizu MA50"
+      },
+      "action": "PRATI",
+      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti. Dodatno: dividendni prinos oko 2.23%.",
+      "score": 1.1,
+      "has_dividend": true,
+      "dividend_per_share": 94.7,
+      "dividend_currency": "EUR",
+      "dividend_ex_date": "2026-06-23",
+      "dividend_payment_date": "2026-07-09",
+      "dividend_status": "proposed,voted",
+      "dividend_yield_pct": 2.23,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.46,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "promet je povišen",
+          "ZSE navodi dividendu 94.70 EUR po dionici"
+        ]
+      }
+    },
+    {
+      "ticker": "ADPL",
+      "quote": {
+        "ticker": "ADPL",
+        "last_price": 30.4,
+        "change_pct": -0.98,
+        "turnover_eur": 29311.0,
+        "volume": 963.0,
+        "vwap_price": 30.43717549325,
+        "market_segment": "RP",
+        "isin": "HRADPLRA0006",
+        "is_traded": true
+      },
+      "technical": {
+        "rsi": 31.76135786157124,
+        "ma50": 30.729476000000005,
+        "trend": "sideways",
+        "status": "RSI 31.8, blizu MA50"
+      },
+      "action": "PRATI",
+      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti. Dodatno: dividendni prinos oko 2.63%.",
+      "score": 0.527,
+      "has_dividend": true,
+      "dividend_per_share": 0.8,
+      "dividend_currency": "EUR",
+      "dividend_ex_date": "2026-07-22",
+      "dividend_payment_date": "2026-07-28",
+      "dividend_status": "MojeDionice 2026",
+      "dividend_yield_pct": 2.63,
+      "annual_forecast": {
+        "direction": "NEUTRALNO",
+        "confidence": 0.41,
+        "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
+        "drivers": [
+          "tehnički trend je bočan",
+          "ZSE navodi dividendu 0.80 EUR po dionici"
         ]
       }
     },
@@ -1022,31 +1018,31 @@
       "ticker": "INA",
       "quote": {
         "ticker": "INA",
-        "last_price": 505.0,
-        "change_pct": 1.0,
-        "turnover_eur": 2020.0,
-        "volume": 4.0,
-        "vwap_price": 505.0,
+        "last_price": 500.0,
+        "change_pct": -0.99,
+        "turnover_eur": 8060.0,
+        "volume": 16.0,
+        "vwap_price": 503.75,
         "market_segment": "RO",
         "isin": "HRINA0RA0007",
         "is_traded": true
       },
       "technical": {
-        "rsi": 53.8784725337161,
-        "ma50": 498.22440600000004,
+        "rsi": 31.677045467169492,
+        "ma50": 505.480248,
         "trend": "sideways",
-        "status": "RSI 53.9, blizu MA50"
+        "status": "RSI 31.7, blizu MA50"
       },
       "action": "PRATI",
-      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti. Dodatno: dividendni prinos oko 3.33%.",
-      "score": 2.206,
+      "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti. Dodatno: dividendni prinos oko 3.36%.",
+      "score": 0.347,
       "has_dividend": true,
       "dividend_per_share": 16.8,
       "dividend_currency": "EUR",
       "dividend_ex_date": "2026-06-16",
       "dividend_payment_date": "2026-07-10",
       "dividend_status": "MojeDionice 2026",
-      "dividend_yield_pct": 3.33,
+      "dividend_yield_pct": 3.36,
       "annual_forecast": {
         "direction": "NEUTRALNO",
         "confidence": 0.41,
@@ -1058,41 +1054,40 @@
       }
     },
     {
-      "ticker": "BSQR",
+      "ticker": "LKPC",
       "quote": {
-        "ticker": "BSQR",
-        "last_price": 29.2,
-        "change_pct": 0.69,
-        "turnover_eur": 22311.4,
-        "volume": 761.0,
-        "vwap_price": 29.3185282523,
+        "ticker": "LKPC",
+        "last_price": 170.0,
+        "change_pct": -0.58,
+        "turnover_eur": 3405.0,
+        "volume": 20.0,
+        "vwap_price": 170.25,
         "market_segment": "RO",
-        "isin": "HRMRULRB0008",
+        "isin": "HRLKPCRA0005",
         "is_traded": true
       },
       "technical": {
-        "rsi": 49.78524507326938,
-        "ma50": 28.919103999999997,
+        "rsi": 35.36452457887998,
+        "ma50": 171.00946199999998,
         "trend": "sideways",
-        "status": "RSI 49.8, blizu MA50"
+        "status": "RSI 35.4, blizu MA50"
       },
       "action": "PRATI",
       "reason": "Signal nije dovoljno jak za kupnju, ali vrijedi pratiti.",
-      "score": 1.339,
-      "has_dividend": true,
-      "dividend_per_share": 0.17,
-      "dividend_currency": "EUR",
-      "dividend_ex_date": "2026-08-27",
-      "dividend_payment_date": "2026-09-03",
-      "dividend_status": "proposed",
-      "dividend_yield_pct": 0.58,
+      "score": -0.512,
+      "has_dividend": false,
+      "dividend_per_share": null,
+      "dividend_currency": null,
+      "dividend_ex_date": null,
+      "dividend_payment_date": null,
+      "dividend_status": null,
+      "dividend_yield_pct": null,
       "annual_forecast": {
         "direction": "NEUTRALNO",
-        "confidence": 0.41,
+        "confidence": 0.35,
         "summary": "Signal nije dovoljno jak; očekivanje je neutralno uz potrebu dodatnog praćenja.",
         "drivers": [
-          "tehnički trend je bočan",
-          "ZSE navodi dividendu 0.17 EUR po dionici"
+          "tehnički trend je bočan"
         ]
       }
     }
@@ -1110,13 +1105,6 @@
       "action": "KUPI",
       "summary": "Što smo danas tržili. Quote from trial + OPTE danas je to bilo isplativo. Ne bude li sutra u prvom dijelu dana novog većeg istresanja po lijevoj strani i rušenja cijene na većem volumenu, valjalo bi se opet namjestiti na",
       "source_url": "https://dionice.net/forum/tema/61-sto-smo-danas-trzili/",
-      "confidence": 0.67
-    },
-    {
-      "ticker": "ZB",
-      "action": "PRODAJ",
-      "summary": "Kako trgovati dionicama? Strategije, cake i savjeti. Ledica Specijalist Reakcija primljeno 3,222 Postova 1,232 Member since February 17, 2020 May 15, 2021 at 11:21 AM #20 Quote from emil Quote from Parica PS: zlocesti ..",
-      "source_url": "https://dionice.net/forum/tema/1285-kako-trgovati-dionicama-strategije-cake-i-savjeti/",
       "confidence": 0.67
     }
   ],
