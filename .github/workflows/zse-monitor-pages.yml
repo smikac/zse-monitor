@@ -14,9 +14,8 @@ on:
           - tactical
           - summary
   schedule:
-  - cron: "30 7 * * 1-5"   # 09:30 Zagreb ljeti
-  - cron: "30 13 * * 1-5"  # 15:30 Zagreb ljeti
-  - cron: "0 15 * * 1-5"   # 17:00 Zagreb ljeti
+    - cron: "0 8 * * 1-5"   # 10:00 Zagreb ljeti
+    - cron: "0 13 * * 1-5"  # 15:00 Zagreb ljeti
 
 permissions:
   contents: write
@@ -59,7 +58,16 @@ jobs:
           WOW_TURNOVER_THRESHOLD_EUR: ${{ vars.WOW_TURNOVER_THRESHOLD_EUR || '40000' }}
           WOW_PRICE_CHANGE_THRESHOLD_PCT: ${{ vars.WOW_PRICE_CHANGE_THRESHOLD_PCT || '4' }}
           REQUEST_TIMEOUT_SECONDS: ${{ vars.REQUEST_TIMEOUT_SECONDS || '20' }}
-        run: python backend/run_monitor.py --force "${{ inputs.check_type || 'auto' }}"
+        run: |
+          RUN_MODE="${{ inputs.check_type || 'auto' }}"
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            case "${{ github.event.schedule }}" in
+              "0 8 * * 1-5") RUN_MODE="morning" ;;
+              "0 13 * * 1-5") RUN_MODE="tactical" ;;
+            esac
+          fi
+          echo "Running ZSE monitor in ${RUN_MODE} mode"
+          python backend/run_monitor.py --force "${RUN_MODE}"
 
       - name: Commit generated portfolio data
         if: steps.monitor.outputs.did_run == 'true'

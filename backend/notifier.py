@@ -68,6 +68,56 @@ def build_daily_summary(analyses: list[PortfolioAnalysis], checked_at: datetime)
     return "\n".join(lines).strip()
 
 
+def build_scheduled_report(
+    analyses: list[PortfolioAnalysis],
+    opportunities: list[MarketOpportunity],
+    forum_signals: list[ForumSignal],
+    expert_signals: list[ForumSignal],
+    checked_at: datetime,
+    check_type: str,
+) -> str:
+    report_name = "Jutarnji izvještaj" if check_type == "morning" else "Popodnevni izvještaj"
+    lines = [f"*ZSE {report_name}* `{checked_at.strftime('%d.%m.%Y %H:%M')}`", ""]
+
+    lines.append("*Portfelj*")
+    if analyses:
+        for item in analyses:
+            quote = item.quote
+            price = f"{quote.last_price:.2f} EUR" if quote else "N/A"
+            change = f"{quote.change_pct:+.2f}%" if quote else "N/A"
+            lines.append(
+                f"- *{_escape_md(item.ticker)}* `{price}` `{change}` - "
+                f"{_escape_md(item.recommendation.action)}"
+            )
+    else:
+        lines.append("- Nema pozicija za prikaz.")
+    lines.append("")
+
+    lines.append("*Dnevni ZSE kandidati*")
+    if opportunities:
+        for item in opportunities[:6]:
+            lines.append(
+                f"- *{_escape_md(item.ticker)}* {_escape_md(item.action)} "
+                f"`{item.quote.last_price:.2f} EUR` `{item.quote.change_pct:+.2f}%` - "
+                f"{_escape_md(item.reason)}"
+            )
+    else:
+        lines.append("- Nema dovoljno jakih kandidata izvan portfelja.")
+    lines.append("")
+
+    relevant_forum = [item for item in forum_signals if item.action in {"KUPI", "PRODAJ"}]
+    relevant_expert = [item for item in expert_signals if item.action in {"KUPI", "PRODAJ"}]
+    lines.append("*Forum / expert signali*")
+    if not relevant_forum and not relevant_expert:
+        lines.append("- Nema novih bitnih signala.")
+    for item in relevant_forum[:4]:
+        lines.append(f"- Forum: *{_escape_md(item.ticker)}* {_escape_md(item.action)} - {_escape_md(item.summary)}")
+    for item in relevant_expert[:4]:
+        lines.append(f"- Expert: *{_escape_md(item.ticker)}* {_escape_md(item.action)} - {_escape_md(item.summary)}")
+
+    return "\n".join(lines).strip()
+
+
 def build_signal_digest(
     analyses: list[PortfolioAnalysis],
     opportunities: list[MarketOpportunity],

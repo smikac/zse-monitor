@@ -9,7 +9,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from json_utils import to_jsonable
-from notifier import build_signal_digest, send_telegram_message
+from notifier import build_scheduled_report, build_signal_digest, send_telegram_message
 from portfolio_service import analyze_expert_signals, analyze_forum_signals, analyze_market_opportunities, analyze_portfolio
 
 
@@ -17,8 +17,8 @@ ZAGREB_TZ = ZoneInfo("Europe/Zagreb")
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PORTFOLIO_JSON = REPO_ROOT / "frontend" / "public" / "data" / "portfolio.json"
 SCHEDULE = {
-    "morning": time(9, 30),
-    "tactical": time(15, 30),
+    "morning": time(10, 0),
+    "tactical": time(15, 0),
     "summary": time(17, 0),
 }
 
@@ -51,7 +51,7 @@ def main() -> int:
     known_tickers = owned_tickers | {item.ticker for item in opportunities}
     forum_signals = analyze_forum_signals(known_tickers)
     expert_signals = analyze_expert_signals(known_tickers)
-    _send_notifications(analyses, opportunities, forum_signals, expert_signals, checked_at)
+    _send_notifications(analyses, opportunities, forum_signals, expert_signals, checked_at, check_type)
     _write_dashboard_payload(previous_payload, check_type, analyses, opportunities, forum_signals, expert_signals, checked_at)
     _write_github_output(True)
     logger.info("Completed %s check with %d analyzed positions.", check_type, len(analyses))
@@ -90,7 +90,12 @@ def _already_completed_today(payload: dict, check_type: str, checked_at: datetim
     return last_runs.get(check_type) == checked_at.date().isoformat()
 
 
-def _send_notifications(analyses: list, opportunities: list, forum_signals: list, expert_signals: list, checked_at: datetime) -> None:
+def _send_notifications(analyses: list, opportunities: list, forum_signals: list, expert_signals: list, checked_at: datetime, check_type: str) -> None:
+    if check_type in {"morning", "tactical"}:
+        message = build_scheduled_report(analyses, opportunities, forum_signals, expert_signals, checked_at, check_type)
+        send_telegram_message(message)
+        return
+
     message = build_signal_digest(analyses, opportunities, forum_signals, expert_signals, checked_at)
     if message is None:
         logger.info("No urgent sell, buy opportunity, or forum signal found; Telegram skipped.")
