@@ -1,12 +1,12 @@
 {
   "meta": {
-    "generated_at": "2026-08-27T20:50:05.864973+02:00",
-    "generated_at_utc": "2026-08-27T18:50:31.594664+00:00",
-    "check_type": "morning",
+    "generated_at": "2026-08-28T00:54:52.527412+02:00",
+    "generated_at_utc": "2026-08-27T22:55:15.069724+00:00",
+    "check_type": "tactical",
     "last_runs": {
       "summary": "2026-07-16",
       "morning": "2026-08-27",
-      "tactical": "2026-08-26"
+      "tactical": "2026-08-28"
     }
   },
   "positions": [
@@ -64,7 +64,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-08-27T20:50:05.864973+02:00"
+      "checked_at": "2026-08-28T00:54:52.527412+02:00"
     },
     {
       "ticker": "RIVP",
@@ -120,7 +120,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-08-27T20:50:05.864973+02:00"
+      "checked_at": "2026-08-28T00:54:52.527412+02:00"
     },
     {
       "ticker": "KOEI",
@@ -176,7 +176,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-08-27T20:50:05.864973+02:00"
+      "checked_at": "2026-08-28T00:54:52.527412+02:00"
     },
     {
       "ticker": "DLKV",
@@ -232,7 +232,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-08-27T20:50:05.864973+02:00"
+      "checked_at": "2026-08-28T00:54:52.527412+02:00"
     },
     {
       "ticker": "HT",
@@ -288,7 +288,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-08-27T20:50:05.864973+02:00"
+      "checked_at": "2026-08-28T00:54:52.527412+02:00"
     },
     {
       "ticker": "JDRN",
@@ -343,7 +343,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-08-27T20:50:05.864973+02:00"
+      "checked_at": "2026-08-28T00:54:52.527412+02:00"
     },
     {
       "ticker": "HPB",
@@ -399,7 +399,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-08-27T20:50:05.864973+02:00"
+      "checked_at": "2026-08-28T00:54:52.527412+02:00"
     },
     {
       "ticker": "AUHR",
@@ -455,7 +455,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-08-27T20:50:05.864973+02:00"
+      "checked_at": "2026-08-28T00:54:52.527412+02:00"
     },
     {
       "ticker": "ERNT",
@@ -510,7 +510,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-08-27T20:50:05.864973+02:00"
+      "checked_at": "2026-08-28T00:54:52.527412+02:00"
     },
     {
       "ticker": "ZABA",
@@ -565,7 +565,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-08-27T20:50:05.864973+02:00"
+      "checked_at": "2026-08-28T00:54:52.527412+02:00"
     },
     {
       "ticker": "ZITO",
@@ -620,7 +620,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-08-27T20:50:05.864973+02:00"
+      "checked_at": "2026-08-28T00:54:52.527412+02:00"
     }
   ],
   "opportunities": [
@@ -1094,14 +1094,14 @@
   ],
   "forum_signals": [
     {
-      "ticker": "HT",
+      "ticker": "ADPL",
       "action": "KUPI",
       "summary": "Što smo danas tržili. Quote from trial + OPTE danas je to bilo isplativo. Ne bude li sutra u prvom dijelu dana novog većeg istresanja po lijevoj strani i rušenja cijene na većem volumenu, valjalo bi se opet namjestiti na",
       "source_url": "https://dionice.net/forum/tema/61-sto-smo-danas-trzili/",
       "confidence": 0.67
     },
     {
-      "ticker": "ADPL",
+      "ticker": "HT",
       "action": "KUPI",
       "summary": "Što smo danas tržili. Quote from trial + OPTE danas je to bilo isplativo. Ne bude li sutra u prvom dijelu dana novog većeg istresanja po lijevoj strani i rušenja cijene na većem volumenu, valjalo bi se opet namjestiti na",
       "source_url": "https://dionice.net/forum/tema/61-sto-smo-danas-trzili/",
