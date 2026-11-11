@@ -1,12 +1,12 @@
 {
   "meta": {
-    "generated_at": "2026-11-11T18:22:47.505030+01:00",
-    "generated_at_utc": "2026-11-11T17:23:10.939930+00:00",
-    "check_type": "morning",
+    "generated_at": "2026-11-11T21:06:49.805956+01:00",
+    "generated_at_utc": "2026-11-11T20:07:07.246416+00:00",
+    "check_type": "tactical",
     "last_runs": {
       "summary": "2026-07-16",
       "morning": "2026-11-11",
-      "tactical": "2026-10-09"
+      "tactical": "2026-11-11"
     }
   },
   "positions": [
@@ -64,7 +64,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-11T18:22:47.505030+01:00"
+      "checked_at": "2026-11-11T21:06:49.805956+01:00"
     },
     {
       "ticker": "RIVP",
@@ -121,7 +121,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-11-11T18:22:47.505030+01:00"
+      "checked_at": "2026-11-11T21:06:49.805956+01:00"
     },
     {
       "ticker": "KOEI",
@@ -177,7 +177,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-11-11T18:22:47.505030+01:00"
+      "checked_at": "2026-11-11T21:06:49.805956+01:00"
     },
     {
       "ticker": "DLKV",
@@ -233,7 +233,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-11-11T18:22:47.505030+01:00"
+      "checked_at": "2026-11-11T21:06:49.805956+01:00"
     },
     {
       "ticker": "HT",
@@ -289,7 +289,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-11-11T18:22:47.505030+01:00"
+      "checked_at": "2026-11-11T21:06:49.805956+01:00"
     },
     {
       "ticker": "JDRN",
@@ -345,7 +345,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-11-11T18:22:47.505030+01:00"
+      "checked_at": "2026-11-11T21:06:49.805956+01:00"
     },
     {
       "ticker": "HPB",
@@ -401,7 +401,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-11T18:22:47.505030+01:00"
+      "checked_at": "2026-11-11T21:06:49.805956+01:00"
     },
     {
       "ticker": "AUHR",
@@ -457,7 +457,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-11T18:22:47.505030+01:00"
+      "checked_at": "2026-11-11T21:06:49.805956+01:00"
     },
     {
       "ticker": "ERNT",
@@ -512,7 +512,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-11T18:22:47.505030+01:00"
+      "checked_at": "2026-11-11T21:06:49.805956+01:00"
     },
     {
       "ticker": "ZABA",
@@ -567,7 +567,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-11T18:22:47.505030+01:00"
+      "checked_at": "2026-11-11T21:06:49.805956+01:00"
     },
     {
       "ticker": "ZITO",
@@ -622,7 +622,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-11T18:22:47.505030+01:00"
+      "checked_at": "2026-11-11T21:06:49.805956+01:00"
     }
   ],
   "opportunities": [
