@@ -1,11 +1,11 @@
 {
   "meta": {
-    "generated_at": "2026-11-17T22:39:42.719261+01:00",
-    "generated_at_utc": "2026-11-17T21:39:59.978451+00:00",
-    "check_type": "tactical",
+    "generated_at": "2026-11-18T17:56:22.899828+01:00",
+    "generated_at_utc": "2026-11-18T16:56:45.409856+00:00",
+    "check_type": "morning",
     "last_runs": {
       "summary": "2026-07-16",
-      "morning": "2026-11-17",
+      "morning": "2026-11-18",
       "tactical": "2026-11-17"
     }
   },
@@ -64,7 +64,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-17T22:39:42.719261+01:00"
+      "checked_at": "2026-11-18T17:56:22.899828+01:00"
     },
     {
       "ticker": "RIVP",
@@ -120,7 +120,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-11-17T22:39:42.719261+01:00"
+      "checked_at": "2026-11-18T17:56:22.899828+01:00"
     },
     {
       "ticker": "KOEI",
@@ -176,7 +176,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-11-17T22:39:42.719261+01:00"
+      "checked_at": "2026-11-18T17:56:22.899828+01:00"
     },
     {
       "ticker": "DLKV",
@@ -231,7 +231,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-17T22:39:42.719261+01:00"
+      "checked_at": "2026-11-18T17:56:22.899828+01:00"
     },
     {
       "ticker": "HT",
@@ -287,7 +287,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-11-17T22:39:42.719261+01:00"
+      "checked_at": "2026-11-18T17:56:22.899828+01:00"
     },
     {
       "ticker": "JDRN",
@@ -342,7 +342,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-17T22:39:42.719261+01:00"
+      "checked_at": "2026-11-18T17:56:22.899828+01:00"
     },
     {
       "ticker": "HPB",
@@ -398,7 +398,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-17T22:39:42.719261+01:00"
+      "checked_at": "2026-11-18T17:56:22.899828+01:00"
     },
     {
       "ticker": "AUHR",
@@ -454,7 +454,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-17T22:39:42.719261+01:00"
+      "checked_at": "2026-11-18T17:56:22.899828+01:00"
     },
     {
       "ticker": "ERNT",
@@ -509,7 +509,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-17T22:39:42.719261+01:00"
+      "checked_at": "2026-11-18T17:56:22.899828+01:00"
     },
     {
       "ticker": "ZABA",
@@ -564,7 +564,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-17T22:39:42.719261+01:00"
+      "checked_at": "2026-11-18T17:56:22.899828+01:00"
     },
     {
       "ticker": "ZITO",
@@ -619,7 +619,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-17T22:39:42.719261+01:00"
+      "checked_at": "2026-11-18T17:56:22.899828+01:00"
     }
   ],
   "opportunities": [
@@ -1095,14 +1095,14 @@
   ],
   "forum_signals": [
     {
-      "ticker": "HT",
+      "ticker": "ADPL",
       "action": "KUPI",
       "summary": "Što smo danas tržili. Quote from trial + OPTE danas je to bilo isplativo. Ne bude li sutra u prvom dijelu dana novog većeg istresanja po lijevoj strani i rušenja cijene na većem volumenu, valjalo bi se opet namjestiti na",
       "source_url": "https://dionice.net/forum/tema/61-sto-smo-danas-trzili/",
       "confidence": 0.67
     },
     {
-      "ticker": "ADPL",
+      "ticker": "HT",
       "action": "KUPI",
       "summary": "Što smo danas tržili. Quote from trial + OPTE danas je to bilo isplativo. Ne bude li sutra u prvom dijelu dana novog većeg istresanja po lijevoj strani i rušenja cijene na većem volumenu, valjalo bi se opet namjestiti na",
       "source_url": "https://dionice.net/forum/tema/61-sto-smo-danas-trzili/",
