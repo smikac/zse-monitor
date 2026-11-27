@@ -1,12 +1,12 @@
 {
   "meta": {
-    "generated_at": "2026-11-27T18:50:08.587994+01:00",
-    "generated_at_utc": "2026-11-27T17:50:28.463464+00:00",
-    "check_type": "morning",
+    "generated_at": "2026-11-27T22:53:42.423019+01:00",
+    "generated_at_utc": "2026-11-27T21:54:04.891597+00:00",
+    "check_type": "tactical",
     "last_runs": {
       "summary": "2026-07-16",
       "morning": "2026-11-27",
-      "tactical": "2026-11-26"
+      "tactical": "2026-11-27"
     }
   },
   "positions": [
@@ -64,7 +64,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-27T18:50:08.587994+01:00"
+      "checked_at": "2026-11-27T22:53:42.423019+01:00"
     },
     {
       "ticker": "RIVP",
@@ -120,7 +120,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-11-27T18:50:08.587994+01:00"
+      "checked_at": "2026-11-27T22:53:42.423019+01:00"
     },
     {
       "ticker": "KOEI",
@@ -176,7 +176,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-11-27T18:50:08.587994+01:00"
+      "checked_at": "2026-11-27T22:53:42.423019+01:00"
     },
     {
       "ticker": "DLKV",
@@ -232,7 +232,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": true,
-      "checked_at": "2026-11-27T18:50:08.587994+01:00"
+      "checked_at": "2026-11-27T22:53:42.423019+01:00"
     },
     {
       "ticker": "HT",
@@ -287,7 +287,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-27T18:50:08.587994+01:00"
+      "checked_at": "2026-11-27T22:53:42.423019+01:00"
     },
     {
       "ticker": "JDRN",
@@ -342,7 +342,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-27T18:50:08.587994+01:00"
+      "checked_at": "2026-11-27T22:53:42.423019+01:00"
     },
     {
       "ticker": "HPB",
@@ -397,7 +397,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-27T18:50:08.587994+01:00"
+      "checked_at": "2026-11-27T22:53:42.423019+01:00"
     },
     {
       "ticker": "AUHR",
@@ -453,7 +453,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-27T18:50:08.587994+01:00"
+      "checked_at": "2026-11-27T22:53:42.423019+01:00"
     },
     {
       "ticker": "ERNT",
@@ -508,7 +508,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-27T18:50:08.587994+01:00"
+      "checked_at": "2026-11-27T22:53:42.423019+01:00"
     },
     {
       "ticker": "ZABA",
@@ -563,7 +563,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-27T18:50:08.587994+01:00"
+      "checked_at": "2026-11-27T22:53:42.423019+01:00"
     },
     {
       "ticker": "ZITO",
@@ -618,7 +618,7 @@
       "pnl_eur": null,
       "pnl_pct": null,
       "wow_event": false,
-      "checked_at": "2026-11-27T18:50:08.587994+01:00"
+      "checked_at": "2026-11-27T22:53:42.423019+01:00"
     }
   ],
   "opportunities": [
@@ -1097,14 +1097,14 @@
   ],
   "forum_signals": [
     {
-      "ticker": "HT",
+      "ticker": "ADPL",
       "action": "KUPI",
       "summary": "Što smo danas tržili. Quote from trial + OPTE danas je to bilo isplativo. Ne bude li sutra u prvom dijelu dana novog većeg istresanja po lijevoj strani i rušenja cijene na većem volumenu, valjalo bi se opet namjestiti na",
       "source_url": "https://dionice.net/forum/tema/61-sto-smo-danas-trzili/",
       "confidence": 0.67
     },
     {
-      "ticker": "ADPL",
+      "ticker": "HT",
       "action": "KUPI",
       "summary": "Što smo danas tržili. Quote from trial + OPTE danas je to bilo isplativo. Ne bude li sutra u prvom dijelu dana novog većeg istresanja po lijevoj strani i rušenja cijene na većem volumenu, valjalo bi se opet namjestiti na",
       "source_url": "https://dionice.net/forum/tema/61-sto-smo-danas-trzili/",
